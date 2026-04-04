@@ -2,7 +2,6 @@
   "dependencies": {
     "com.itisnajim.socketiounity": "https://github.com/itisnajim/SocketIOUnity.git",
     "com.ucl.ubiq": "https://github.com/UCL-VR/ubiq.git#upm",
-    "com.unity.collab-proxy": "2.12.4",
     "com.unity.feature.development": "1.0.1",
     "com.unity.feature.vr": "1.0.0",
     "com.unity.inputsystem": "1.14.0",
@@ -19,6 +18,7 @@
     "com.unity.xr.management": "4.5.1",
     "com.unity.xr.mock-hmd": "1.5.0-exp.3",
     "com.unity.xr.openxr": "1.14.3",
+    "com.veriorpies.parrelsync": "file:D:/Dev/Unity/ParrelSync/ParrelSync",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

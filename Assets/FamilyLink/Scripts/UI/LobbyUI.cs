@@ -11,6 +11,7 @@ public class LobbyUI : MonoBehaviour
     {
         if (SocketManager.socketManager?.socket == null) return;
         var socket = SocketManager.socketManager.socket;
+        Debug.Log(socket);
 
         socket.OnUnityThread("room:state", (data) => {
             try {
@@ -32,6 +33,7 @@ public class LobbyUI : MonoBehaviour
                 // 3. 데이터가 정상적으로 담겼다면 씬 전환
                 if (state != null && !string.IsNullOrEmpty(state.roomId)) {
                     Debug.Log($"<color=cyan>[Lobby]</color> 검증 완료. 씬 이동: {state.joinCode}");
+                    SessionManager.sessionManager.setRoomID(state.joinCode);
                     SceneManager.LoadScene("KaraokeRoom");
                 }
             }

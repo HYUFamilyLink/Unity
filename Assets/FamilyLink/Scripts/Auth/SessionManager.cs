@@ -10,6 +10,7 @@ public class SessionManager : MonoBehaviour
     [Header("Session Data")]
     public string authToken;
     public NetworkUser currentUser;
+    public string roomID;
 
     private void Awake()
     {
@@ -27,5 +28,10 @@ public class SessionManager : MonoBehaviour
     {
         authToken = token;
         currentUser = user;
+    }
+
+    public void setRoomID(string id)
+    {
+        roomID = id;
     }
 }
