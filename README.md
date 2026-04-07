@@ -4,7 +4,36 @@
 
 ---
 
-## 0. 유니티 버전 2022.3.62f3(2022.3LTS)
+## 0. 사용 툴 & 폴더 구조
+
+### 유니티 버전 2022.3.62f3(2022.3LTS)
+
+```text
+FamilyLink/
+├── Avartar/             # 아바타 프리팹 및 에셋
+├── Font/                # 폰트 리소스 (NexonBold, NexonReguler, TTF)
+├── Scenes/              # 메인 씬 (Lobby, KaraokeRoom)
+├── Scripts/
+│   ├── Avatar/
+│   │   └── AvatarManager.cs
+│   ├── Core/
+│   │   └── AppConfig.cs
+│   ├── Network/
+│   │   ├── Auth/
+│   │   │   ├── AuthManager.cs
+│   │   │   └── SessionManager.cs
+│   │   ├── SoketIO/
+│   │   │   ├── NetworkUser.cs
+│   │   │   └── SoketManager.cs
+│   │   └── Ubiq/
+│   │       ├── ObjSync.cs
+│   │       └── UbiqP2PManager.cs
+│   └── UI/
+│       ├── LobbyUI.cs
+│       └── UIManager.cs
+└── Test/                # 테스트 스크립트
+    └── PhotonTest.cs
+```
 
 ---
 
@@ -19,6 +48,7 @@
 | **SocketIOUnity** | `https://github.com/itisnajim/SocketIOUnity.git` | 실시간 시그널링 서버 연결 |
 | **Photon Voice 2** | Unity Asset Store | 실시간 음성 채팅 |
 | **XR Hands** | `Unity Registry` > `XR Hands` | 핸드 트래킹 지원 |
+| **ParrelSync** | https://github.com/VeriorPies/ParrelSync | (선택) 멀티플레이 디버깅 |
 
 ---
 

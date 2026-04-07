@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using System.Collections;
 
 //Lobby에서 UI 변화를 관장하는 스크립트
 public class UIManager : MonoBehaviour

@@ -3951,6 +3951,7 @@ MonoBehaviour:
     nickname: 
     role: vr
   roomID: 
+  users: []
 --- !u!4 &1988380354
 Transform:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using FamilyLink.Network;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -33,7 +34,9 @@ public class LobbyUI : MonoBehaviour
                 // 3. 데이터가 정상적으로 담겼다면 씬 전환
                 if (state != null && !string.IsNullOrEmpty(state.roomId)) {
                     Debug.Log($"<color=cyan>[Lobby]</color> 검증 완료. 씬 이동: {state.joinCode}");
-                    SessionManager.sessionManager.setRoomID(state.joinCode);
+                    SessionManager.sessionManager.SetRoomID(state.joinCode);
+                    SessionManager.sessionManager.SetRoomUser(state.participants);
+                    socket.Off("room:state");
                     SceneManager.LoadScene("KaraokeRoom");
                 }
             }
@@ -89,4 +92,5 @@ public class RoomStateResponse {
     public string roomId;
     public string joinCode;
     public string status;
+    public List<NetworkUser> participants;
 }
