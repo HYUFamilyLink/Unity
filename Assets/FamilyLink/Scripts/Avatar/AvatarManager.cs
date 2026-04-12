@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ExitGames.Client.Photon.StructWrapping;
+using System.Security.Principal;
 using FamilyLink.Network;
 using Ubiq.Rooms;
 using Ubiq.Spawning;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
 
 //아바타 생성, 관리, 소켓-ubiq간 매핑
 public class AvatarManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class AvatarManager : MonoBehaviour
     //soketIO에서 받아온 데이터
     private List<NetworkUser> users;
     private NetworkUser currentUser;
+    private string lastInId;
 
     //ubiq
     public NetworkSpawnManager spawnManager;
@@ -46,7 +48,16 @@ public class AvatarManager : MonoBehaviour
 
         users = SessionManager.sessionManager.users;
         currentUser = SessionManager.sessionManager.currentUser;
+
+        if(SocketManager.socketManager != null)
+        {
+            Debug.Log("asdfdasfasfdsfasdfasfdsafsa");
+            SocketManager.socketManager.OnUserJoined += HandleUserJoin;
+            SocketManager.socketManager.OnUserLeft += HandleUserLeft;
+        }
     }
+
+    //본인 오브젝트 생성
     public IEnumerator SpawnAvatarRoutine()
     {
 
@@ -62,24 +73,27 @@ public class AvatarManager : MonoBehaviour
         }
 
         Debug.Log(roomClient.Peers.Count() + "생성ㅇㅇㅇ" + isMaster);
-        //마스터 피어가 아니면 여기서 끝
-        if (isMaster)
-        {
-            foreach(var user in users)
-            {
-                //웹 유저만을 생성 if문
-                //소켓의 role 만을 확인하면 간단히 끝난다
-                //하지만 4/7일 기준 백엔드의 role 설정이 회원가입에 묶여있어 직접 연산
-                if(user.id == currentUser.id) continue;
-                if(!roomClient.Peers.Any(p => p["id"] == user.id) && !userDict.ContainsKey(user.id))
-                {
-                    userDict[user.id] = null;
-                    spawnManager.SpawnWithRoomScope(avatarBase);
-                    //어딘가에 오브젝트랑 아이디 기록
-                    //아마도 생성된 오브젝트에
-                }
-            }   
-        }
+    }
+
+    //타 유저 오브젝트 생성
+    //마스터 피어만 이 작업을 수행하며, 웹 유저에 대해서만 이 작업을 수행한다
+    public void HandleUserJoin(NetworkUser user)
+    {
+        if(user.role == "vr" || !isMaster) return;
+        Debug.Log("호출ㄹㄹㄹㄹㅁㄴㅇㄻㄴㄹㅇ");
+        spawnManager.SpawnWithRoomScope(avatarBase);
+        lastInId = user.id;
+    }
+
+    //타 유저 삭제 루틴
+    public void HandleUserLeft(string _id)
+    {
+        if(!userDict.ContainsKey(_id)) return;
+        Debug.Log("퇴장ㅇ");
+
+        //임시 하드코딩
+        bool isWeb = true;
+        StartCoroutine(OnAvatarOutRoutine(_id,isWeb));
     }
 
     //오브젝트 생성 완료시 호출
@@ -95,17 +109,24 @@ public class AvatarManager : MonoBehaviour
         //웹 유저 매핑
         else
         {
+            Debug.Log(go.name + "asdfasd");
             //roomScope로 생성된 유저는 peer 정보가 없어서 오브젝트에 id를 담을 스크립트가 필요하다
             var webUser = users.FirstOrDefault(u => !userDict.ContainsKey(u.id));
-            if(webUser != null) userDict[webUser.id] = go;
+            Debug.Log(webUser);
+            if(webUser == null) {userDict[lastInId] = go; Debug.Log("등록");}
         }
     }
 
+    //오브젝트 퇴장시 호출
     public IEnumerator OnAvatarOutRoutine(string id, bool isWeb)
     {
+        Debug.Log("삭제로직1");
         if(!userDict.ContainsKey(id)) yield break;
+        Debug.Log("삭제로직2");
         yield return new WaitUntil(() => roomClient.Me != null && roomClient.Me.networkId.Valid);
         if(isMaster && isWeb) spawnManager.Despawn(userDict[id]);
+        Debug.Log("삭제로직3");
         userDict.Remove(id);
+        Debug.Log("삭제로직4");
     }
 }
