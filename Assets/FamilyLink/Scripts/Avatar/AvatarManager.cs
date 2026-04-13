@@ -5,6 +5,7 @@ using System.Security.Principal;
 using FamilyLink.Network;
 using Ubiq.Rooms;
 using Ubiq.Spawning;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
 
@@ -21,20 +22,22 @@ public class AvatarManager : MonoBehaviour
 
     //soket - ubiq peer 매핑된 딕셔너리
     //키-soket id(uuid), value - 대상 오브젝트
-    public Dictionary<string, GameObject> userDict = new Dictionary<string, GameObject>();
+    public Dictionary<string, Avatar> userDict = new Dictionary<string, Avatar>();
 
     //soketIO에서 받아온 데이터
-    private List<NetworkUser> users;
-    private NetworkUser currentUser;
-    private string lastInId;
+    private List<NetworkUser> users => SessionManager.sessionManager.users;
+    private NetworkUser currentUser => SessionManager.sessionManager.currentUser;
+
+    //서버에 vr 유저가 최초 입장시에만 사용된다.
+    public Queue<string> webId = new Queue<string>();
 
     //ubiq
     public NetworkSpawnManager spawnManager;
     RoomClient roomClient => spawnManager.roomClient;
 
     //TODO : 전용 Avatar class로 변경
-    public GameObject avatarBase;
-    bool isMaster => spawnManager.roomClient.Peers.All(p => p.networkId.GetHashCode() > spawnManager.roomClient.Me.networkId.GetHashCode());
+    public Avatar avatarBase;
+    bool isMaster => spawnManager.roomClient.Peers.All(p => p.networkId.GetHashCode() >= spawnManager.roomClient.Me.networkId.GetHashCode());
     
     void Awake()
     {
@@ -46,12 +49,8 @@ public class AvatarManager : MonoBehaviour
         if (spawnManager == null) spawnManager = FindObjectOfType<NetworkSpawnManager>();
         spawnManager.OnSpawned.AddListener(OnAvatarSpawned);
 
-        users = SessionManager.sessionManager.users;
-        currentUser = SessionManager.sessionManager.currentUser;
-
         if(SocketManager.socketManager != null)
         {
-            Debug.Log("asdfdasfasfdsfasdfasfdsafsa");
             SocketManager.socketManager.OnUserJoined += HandleUserJoin;
             SocketManager.socketManager.OnUserLeft += HandleUserLeft;
         }
@@ -60,19 +59,29 @@ public class AvatarManager : MonoBehaviour
     //본인 오브젝트 생성
     public IEnumerator SpawnAvatarRoutine()
     {
-
         yield return new WaitUntil(() => roomClient.Me != null && roomClient.Me.networkId.Valid);
+
+        if(isMaster)
+        {
+            Debug.Log("생성if문진입");
+            foreach(NetworkUser user in users)
+            {
+                if(user.id == currentUser.id) continue;
+                Debug.Log(user.id);
+                webId.Enqueue(user.id);
+                HandleUserJoin(user);
+            }
+        }
 
         //본인 아바타 생성
         if (!userDict.ContainsKey(currentUser.id))
         {
             userDict[currentUser.id] = null;
-            GameObject myAvatar = spawnManager.SpawnWithPeerScope(avatarBase);
+            GameObject myAvatar = spawnManager.SpawnWithPeerScope(avatarBase.gameObject);
             myAvatar.GetComponent<ObjSync>().enabled = true;
             myAvatar.GetComponent<ObjSync>().SetOwner(true);
+            myAvatar.GetComponent<Avatar>().SetID(currentUser.id);
         }
-
-        Debug.Log(roomClient.Peers.Count() + "생성ㅇㅇㅇ" + isMaster);
     }
 
     //타 유저 오브젝트 생성
@@ -80,12 +89,10 @@ public class AvatarManager : MonoBehaviour
     public void HandleUserJoin(NetworkUser user)
     {
         if(user.role == "vr" || !isMaster) return;
-        Debug.Log("호출ㄹㄹㄹㄹㅁㄴㅇㄻㄴㄹㅇ");
-        spawnManager.SpawnWithRoomScope(avatarBase);
-        lastInId = user.id;
+        spawnManager.SpawnWithRoomScope(avatarBase.gameObject);
     }
 
-    //타 유저 삭제 루틴
+    //타 유저 삭제 루틴(웹)
     public void HandleUserLeft(string _id)
     {
         if(!userDict.ContainsKey(_id)) return;
@@ -104,17 +111,13 @@ public class AvatarManager : MonoBehaviour
         if(peer != null)
         {
             string id = peer["id"];
-            if(!string.IsNullOrEmpty(id)) userDict[id] = go;
+            if(!string.IsNullOrEmpty(id)) userDict[id] = go.GetComponent<Avatar>();
         }
-        //웹 유저 매핑
         else
         {
-            Debug.Log(go.name + "asdfasd");
-            //roomScope로 생성된 유저는 peer 정보가 없어서 오브젝트에 id를 담을 스크립트가 필요하다
-            var webUser = users.FirstOrDefault(u => !userDict.ContainsKey(u.id));
-            Debug.Log(webUser);
-            if(webUser == null) {userDict[lastInId] = go; Debug.Log("등록");}
+            go.GetComponent<Avatar>().SetID(webId.Dequeue());
         }
+        //웹 유저 매핑 함수는 objsync에서 호출
     }
 
     //오브젝트 퇴장시 호출
@@ -124,9 +127,14 @@ public class AvatarManager : MonoBehaviour
         if(!userDict.ContainsKey(id)) yield break;
         Debug.Log("삭제로직2");
         yield return new WaitUntil(() => roomClient.Me != null && roomClient.Me.networkId.Valid);
-        if(isMaster && isWeb) spawnManager.Despawn(userDict[id]);
+        if(isMaster && isWeb) spawnManager.Despawn(userDict[id].gameObject);
         Debug.Log("삭제로직3");
         userDict.Remove(id);
-        Debug.Log("삭제로직4");
+    }
+
+    public void ReigsterAvatar(string id, Avatar avatar)
+    {
+        if(string.IsNullOrEmpty(id) || userDict.ContainsKey(id)) return;
+        userDict[id] = avatar;
     }
 }

@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnManager: {fileID: 718384039}
-  avatarBase: {fileID: 688460392133940691, guid: b44d01fd12c1056489400f3c7a2881b6, type: 3}
+  avatarBase: {fileID: 7403367251108222099, guid: b44d01fd12c1056489400f3c7a2881b6, type: 3}
 --- !u!4 &92681029
 Transform:
   m_ObjectHideFlags: 0

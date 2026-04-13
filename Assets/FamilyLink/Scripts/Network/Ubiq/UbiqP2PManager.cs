@@ -88,7 +88,6 @@ public class UbiqP2PManager : MonoBehaviour
         {
             AvatarManager.avatarManager.StartSetup();
             StartCoroutine(AvatarManager.avatarManager.SpawnAvatarRoutine());
-            Debug.Log("호출ㄹㄹㄹ");
         } 
     }
 

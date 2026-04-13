@@ -56,10 +56,6 @@ FamilyLink/
 * **Platform**: Android
 * **Texture Compression**: **ASTC** (VR 기기)
 
-### **포톤 설정 (Photon Setup)**
-* **경로**: `Window` > `Photon Unity Networking` > `PUN Wizard`
-* **내용**: 본인의 **Photon App ID** 등록이 필요합니다. 
-
 ### **SoketIO 주소 설정**
 * **AppConfig.cs**: 에서 연결할 Backend Sever 주소를 지정할 수 있습니다.
 * **기본값** : http://localhost:4000
