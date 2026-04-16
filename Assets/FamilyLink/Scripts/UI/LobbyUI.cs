@@ -37,6 +37,7 @@ public class LobbyUI : MonoBehaviour
                     SessionManager.sessionManager.SetRoomID(state.joinCode);
                     SessionManager.sessionManager.SetRoomUser(state.participants);
                     socket.Off("room:state");
+                    SocketManager.socketManager.SetupEvenet();
                     SceneManager.LoadScene("KaraokeRoom");
                 }
             }

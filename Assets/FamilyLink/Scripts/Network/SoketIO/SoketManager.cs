@@ -38,7 +38,6 @@ public class SocketManager : MonoBehaviour
         socket.OnConnected += (sender, e) => Debug.Log("<color=cyan>[Socket]</color> 연결 성공!");
         socket.OnUnityThread("connect_error", (data) => Debug.LogError($"소켓 인증 실패: {data}"));
 
-        SetupEvenet();
         socket.Connect();
     }
 
@@ -57,6 +56,13 @@ public class SocketManager : MonoBehaviour
             var userId = JsonConvert.DeserializeObject<_LeftData_>(data.ToString().Trim('[', ']')).userId;
             OnUserLeft?.Invoke(userId);
         });
+    }
+
+    public void LeftEvenet()
+    {
+        socket.Off("room:user_joined");
+        socket.Off("room:user_left");
+        socket.Emit("room:leave");
     }
 }
 

@@ -11,6 +11,8 @@ public class SessionManager : MonoBehaviour
     [Header("Session Data")]
     public string authToken;
     public NetworkUser currentUser;
+
+    [Header("Room Data")]
     public string roomID;
     public List<NetworkUser> users;
 
@@ -30,6 +32,12 @@ public class SessionManager : MonoBehaviour
     {
         authToken = token;
         currentUser = user;
+    }
+
+    public void ClearRoomData()
+    {
+        roomID = string.Empty;
+        users.Clear();
     }
 
     public void SetRoomID(string id)

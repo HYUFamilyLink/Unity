@@ -27,7 +27,6 @@ public class UbiqP2PManager : MonoBehaviour
             Debug.Log("ㅁㅇㄴㄻㄴ");
             roomClient.OnRooms.AddListener(HandleRoomsFound);
             roomClient.OnJoinedRoom.AddListener((rooms) => OnJoinAction());
-            roomClient.OnPeerAdded.AddListener((peer) => OnPeerInAction(peer));
             roomClient.OnPeerRemoved.AddListener((peer) => OnPeerOutAction(peer));
 
             StartCoroutine(InitRoomClientRoutine());
@@ -97,7 +96,10 @@ public class UbiqP2PManager : MonoBehaviour
         StartCoroutine(AvatarManager.avatarManager.OnAvatarOutRoutine(peer["id"], false));
 
     }
-    public void OnPeerInAction(IPeer peer)
+    public void ClearListener()
     {
+        //어짜피 방 나갈때 호출할거라 싹 날려버려도 상관없다
+        roomClient.OnJoinedRoom.RemoveAllListeners();
+        roomClient.OnPeerRemoved.RemoveAllListeners();
     }
 }

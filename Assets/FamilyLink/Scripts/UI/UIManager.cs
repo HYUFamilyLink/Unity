@@ -59,7 +59,8 @@ public class UIManager : MonoBehaviour
         string json = JsonUtility.ToJson(new LoginData
         {
             name = _name,
-            password = _birth
+            password = _birth,
+            role = "vr"
         });
 
         AuthManager.authManager.Login(json);
@@ -81,4 +82,5 @@ public class RegisterData {
 public class LoginData {
     public string name;
     public string password;
+    public string role;
 }
