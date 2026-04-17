@@ -10,8 +10,11 @@
 
 ```text
 FamilyLink/
-├── Avartar/             # 아바타 프리팹 및 에셋
 ├── Font/                # 폰트 리소스 (NexonBold, NexonReguler, TTF)
+├── Graphic/
+│   ├── Avartar/         # 아바타 프리팹 및 에셋
+│   ├── Background/      # 배경 프리팹 및 에셋
+│   └── Objects/         # 사물 프리팹 및 에셋
 ├── Scenes/              # 메인 씬 (Lobby, KaraokeRoom)
 └── Scripts/
     ├── Avatar/
@@ -73,3 +76,13 @@ npx @ucl-vr/ubiq-server
 +)
 SoketIO로 받아온 방 코드를 이용하여 방을 생성,참가합니다.
 따라서 백엔드 서버의 실행도 선행되어야 합니다.
+
+---
+
+## 4. 사용 Asset 모음
+
+| 사용에셋 | 설치 경로 / URL | 저작권 |
+| :--- | :--- | :--- |
+| **White Modern Living Room** | `https://skfb.ly/oCoML` | dylanheyes, CC Attribution |
+| **Speaker** | `https://skfb.ly/66KzR` | Andulil, CC Attribution |
+| **Ultimate House Interior Pack** | `https://quaternius.com/packs/ultimatehomeinterior.html` | CC0 |
