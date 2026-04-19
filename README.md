@@ -50,6 +50,7 @@ FamilyLink/
 | **AgoraUnitySDK** | `https://docs.agora.io/en/sdks?platform=unity` | 실시간 음성 채팅 |
 | **XR Hands** | `Unity Registry` > `XR Hands` | 핸드 트래킹 지원 |
 | **ParrelSync** | `https://github.com/VeriorPies/ParrelSync` | (선택) 멀티플레이 디버깅 |
+| **Unity glTFast** | `com.unity.cloud.gltfast` | glTF 파일 사용 |
 
 ---
 
@@ -85,4 +86,6 @@ SoketIO로 받아온 방 코드를 이용하여 방을 생성,참가합니다.
 | :--- | :--- | :--- |
 | **White Modern Living Room** | `https://skfb.ly/oCoML` | dylanheyes, CC Attribution |
 | **Speaker** | `https://skfb.ly/66KzR` | Andulil, CC Attribution |
+| **Tamborine from Poly by Google** | `https://skfb.ly/6XSXG` | IronEqual, CC Attribution |
+| **elephant mic 1 retexture 3** | `https://skfb.ly/667uZ` | shaylastewart, CC Attribution |
 | **Ultimate House Interior Pack** | `https://quaternius.com/packs/ultimatehomeinterior.html` | CC0 |
