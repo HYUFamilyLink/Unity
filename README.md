@@ -14,6 +14,7 @@ FamilyLink/
 ├── Graphic/
 │   ├── Avartar/         # 아바타 프리팹 및 에셋
 │   ├── Background/      # 배경 프리팹 및 에셋
+│   ├── Light/           # 광원 효과에 사용되는 에셋
 │   └── Objects/         # 사물 프리팹 및 에셋
 ├── Scenes/              # 메인 씬 (Lobby, KaraokeRoom)
 └── Scripts/
