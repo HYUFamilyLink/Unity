@@ -62,6 +62,7 @@ FamilyLink/
 * **Texture Compression**: **ASTC** (VR 기기)
 
 ### **AppConfig.cs 설정**
+* **AppConfig.cs 대신** **AppConfig.cs.example**가 있습니다
 * **BaseUrl**: 연결할 SoketIO Sever 주소 지정, **기본값** : http://localhost:4000
 * **AgoraAppID**: 아고라 앱 ID
 * **YoutubeAPI**: 유튜브 API 키

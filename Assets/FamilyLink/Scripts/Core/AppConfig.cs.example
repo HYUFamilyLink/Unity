@@ -1,0 +1,23 @@
+//서버 주소 등 상수값들
+public static class AppConfig
+{
+    // --- [백엔드 서버 주소 설정] ---
+    public const string BaseUrl = "http://localhost:4000"; 
+
+    // --- [API 경로] ---
+    public const string AuthApi = BaseUrl + "/api/auth";
+    public const string RegisterUrl = AuthApi + "/register";
+    public const string LoginUrl = AuthApi + "/login";
+
+    // --- [소켓 경로] ---
+    public const string SocketUrl = BaseUrl;
+
+    // --- [Ubiq P2P 포트] ---
+    public const int UbiqPort = 8009;
+
+    // --- [Agora App ID] ---
+    public const string AgoraAppID = "your-app-id-here";
+
+    // --- [Youtube API] ---
+    public const string YoutubeAPI = "your-youtube-api-key-here";
+}

@@ -106,3 +106,6 @@ InitTestScene*.unity*
 # 포톤 채팅이나 보이스
 /Assets/Photon/PhotonChat/Resources/PhotonChatSettings.asset
 /Assets/Photon/PhotonVoice/Resources/PhotonVoiceSettings.asset
+
+# AppConfig
+Assets/FamilyLink/Scripts/Core/AppConfig.cs
