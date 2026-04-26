@@ -11,6 +11,7 @@ public class SessionManager : MonoBehaviour
     [Header("Session Data")]
     public string authToken;
     public NetworkUser currentUser;
+    public int valid_time;
 
     [Header("Room Data")]
     public string roomID;

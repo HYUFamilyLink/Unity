@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88684271e27adb843b6570957c9e7637, type: 3}
+  m_Name: _vrm1_
+  m_EditorClassIdentifier: 
+  m_prefab: {fileID: -1728013695380148634, guid: f99353257330f5a4eb5d38b3fa6932ed, type: 3}
+  Meta:
+    Name: ChibiKetai
+    Version: 1.0
+    Authors:
+    - Gugenka
+    CopyrightInformation: 
+    ContactInformation: info@gugenka.jp
+    References:
+    - chibiketai
+    ThirdPartyLicenses: 
+    Thumbnail: {fileID: 2800000, guid: 11ecb1dab19fca94fac229e57daa0570, type: 3}
+    AvatarPermission: 0
+    ViolentUsage: 0
+    SexualUsage: 0
+    CommercialUsage: 0
+    PoliticalOrReligiousUsage: 0
+    AntisocialOrHateUsage: 0
+    CreditNotation: 0
+    Redistribution: 0
+    Modification: 0
+    OtherLicenseUrl: 
+  Expression:
+    Happy: {fileID: 11400000, guid: 9346d20051f07d24f9926cd6a0b5908b, type: 2}
+    Angry: {fileID: 11400000, guid: 8b0aa67a27a4fc744a8f59b5c059236d, type: 2}
+    Sad: {fileID: 11400000, guid: 6acf19bbef179234280ce42a24256a14, type: 2}
+    Relaxed: {fileID: 11400000, guid: bf76ade7c163e814886e3cbeba624060, type: 2}
+    Surprised: {fileID: 11400000, guid: 69389fb373ad84047aaf0b116500fc21, type: 2}
+    Aa: {fileID: 11400000, guid: 552d90bd4648c354d8da5f0c20cf8bb7, type: 2}
+    Ih: {fileID: 11400000, guid: 8600dcbae22e9144fb4a4d96901bd5f7, type: 2}
+    Ou: {fileID: 11400000, guid: 93531f2feba7c0f4191d007293df31d8, type: 2}
+    Ee: {fileID: 11400000, guid: e02133bb21bb3704bbac3c88e42aa706, type: 2}
+    Oh: {fileID: 11400000, guid: cbc6e9a15ad698b47b7057fffa550937, type: 2}
+    Blink: {fileID: 11400000, guid: d521fec7ee4ca174582fd8ae29e7991e, type: 2}
+    BlinkLeft: {fileID: 11400000, guid: 144cd0f112471ce4fbe7f2d4c20bcfd1, type: 2}
+    BlinkRight: {fileID: 11400000, guid: a6eb2326e119077479dfffc297b0d0b6, type: 2}
+    LookUp: {fileID: 11400000, guid: c59fe22073f70664eb84828ac808763b, type: 2}
+    LookDown: {fileID: 11400000, guid: 23c2bc8fda294a54d94e90ed10fbca3c, type: 2}
+    LookLeft: {fileID: 11400000, guid: deeea287079091347bad51e2ad8bbd31, type: 2}
+    LookRight: {fileID: 11400000, guid: b06804a2fc1c2b94cb1d88906e1b3a52, type: 2}
+    Neutral: {fileID: 11400000, guid: e7c441dcd65717e4ea4a6ce4c61a1207, type: 2}
+    CustomClips: []
+  LookAt:
+    OffsetFromHead: {x: -0, y: 0.06, z: 0}
+    LookAtType: 0
+    HorizontalOuter:
+      CurveXRangeDegree: 90
+      CurveYRangeDegree: 10
+    HorizontalInner:
+      CurveXRangeDegree: 90
+      CurveYRangeDegree: 10
+    VerticalDown:
+      CurveXRangeDegree: 90
+      CurveYRangeDegree: 10
+    VerticalUp:
+      CurveXRangeDegree: 90
+      CurveYRangeDegree: 10
+  FirstPerson:
+    Renderers:
+    - Renderer: Mesh
+      FirstPersonFlag: 0

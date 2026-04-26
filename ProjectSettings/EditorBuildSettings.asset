@@ -12,11 +12,12 @@ EditorBuildSettings:
     path: Assets/FamilyLink/Scenes/KaraokeRoom.unity
     guid: 901cb12cc764c96469fdedd1b0013c16
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2de3d1955eaf0049beb4f0d491bcdff, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 9bec1ce6a03ccba4b9a8215241b32e63, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: a49cadc1a815591479693b955ccf08c1, type: 2}
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: d256bb3bfb407c040ae9aa82eb6d3172, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: e289dde74e672ac42af7326d56cf3c63, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 39616d911e22eb14aaf1852b5fcba814, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: a9a6963505ddf7f4d886008c6dc86122, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: ca1e6680b6742cd469623c0d13f453dc, type: 2}
     xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: 6586c57731912dd49993dbc4f203ed07, type: 2}

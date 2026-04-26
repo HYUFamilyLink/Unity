@@ -9,6 +9,7 @@ namespace FamilyLink.Network
         public string id;
         public string nickname;
         public string role = "vr"; // "phone" 또는 "vr"
+        public int profileimage = 0;
 
         // 유닛 테스트나 디버깅용 편의 기능
         public override string ToString() => $"[{role}] {nickname}";

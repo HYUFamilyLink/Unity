@@ -1,0 +1,52 @@
+fileFormatVersion: 2
+guid: def214bbd728a1344886e14fc629612b
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: initialShadingGroup1
+    second: {fileID: 2100000, guid: 189dffb0398827a43a9d767b7cd9afcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2SG
+    second: {fileID: 2100000, guid: 055629ca679d9074da84f2c8da60b8cb, type: 2}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: initialShadingGroup1_baseColor
+    second: {fileID: 2800000, guid: 93645efc7ddbbe0469ee1f86c46c7832, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: initialShadingGroup1_metallicRoughness.standard
+    second: {fileID: 2800000, guid: 218b55c10ef85144badaa3a7b6a874d2, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: initialShadingGroup1_normal.normal
+    second: {fileID: 2800000, guid: 10e0204b7af15c5488d09f78bb33aa75, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: lambert2SG_baseColor
+    second: {fileID: 2800000, guid: 649b26ef783da6d4096be5d4b7d5c61f, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: lambert2SG_metallicRoughness.standard
+    second: {fileID: 2800000, guid: 6304edff1ecf44c46a621e7996a5ef59, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: lambert2SG_normal.normal
+    second: {fileID: 2800000, guid: fb942744c560916498125ca5cf29bb41, type: 3}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: aecd2106718f2444db3ca21345da2cef, type: 3}
+  reverseAxis: 0
+  renderPipeline: 0

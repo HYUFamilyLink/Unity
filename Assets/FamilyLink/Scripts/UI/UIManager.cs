@@ -66,6 +66,12 @@ public class UIManager : MonoBehaviour
         AuthManager.authManager.Login(json);
     }
 
+    public void KeyboardFloat(string inputField)
+    {
+        TouchScreenKeyboard.Open(inputField);
+        Debug.Log("함수는실행됨@@");
+    }
+
     public void ChangeValueName(string value) => _name = value;
     public void ChangeValueBirth(string value) => _birth = value;
 }

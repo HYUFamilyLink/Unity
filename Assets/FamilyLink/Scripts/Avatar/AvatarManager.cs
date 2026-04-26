@@ -34,7 +34,8 @@ public class AvatarManager : MonoBehaviour
     public NetworkSpawnManager spawnManager;
     RoomClient roomClient => spawnManager.roomClient;
     NetworkSpawner spawner;
-    public Avatar avatarBase;
+    [SerializeField]
+    public PrefabCatalogue avatarCatalogue;
     public bool isMaster;
     string cachedMasterId;
     private const string MASTER_ID = "MASTERID";
@@ -123,7 +124,7 @@ public class AvatarManager : MonoBehaviour
         if (!userDict.ContainsKey(currentUser.id))
         {
             userDict[currentUser.id] = null;
-            GameObject myAvatar = spawnManager.SpawnWithPeerScope(avatarBase.gameObject);
+            GameObject myAvatar = spawnManager.SpawnWithPeerScope(avatarCatalogue.prefabs[currentUser.profileimage]);
             myAvatar.GetComponent<ObjSync>().enabled = true;
             myAvatar.GetComponent<ObjSync>().SetOwner(true);
             myAvatar.GetComponent<Avatar>().SetID(currentUser.id);
@@ -177,7 +178,7 @@ public class AvatarManager : MonoBehaviour
     public void HandleUserJoin(NetworkUser user)
     {
         if(user.role == "vr" || !isMaster) return;
-        SpawnAvatarWithID(avatarBase.gameObject, user.id);
+        SpawnAvatarWithID(avatarCatalogue.prefabs[user.profileimage], user.id);
     }
 
     //타 유저 삭제 루틴(웹)
