@@ -34,7 +34,6 @@ public class AuthManager : MonoBehaviour
             byte[] body = System.Text.Encoding.UTF8.GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(body);
             request.downloadHandler = new DownloadHandlerBuffer();
-
             request.SetRequestHeader("Content-Type", "application/json");
 
             yield return request.SendWebRequest();
@@ -49,6 +48,7 @@ public class AuthManager : MonoBehaviour
                 SocketManager.socketManager.Connect();
 
                 UIManager.uiManager.UIChange(); // login > lobby
+                if(SessionManager.sessionManager.currentUser.profileimage == 0) LobbyUI.lobbyUI.SetProfileImg();
             }
             else
             {

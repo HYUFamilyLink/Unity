@@ -48,6 +48,6 @@ public class SessionManager : MonoBehaviour
 
     public void SetRoomUser(List<NetworkUser> _users)
     {
-        users = _users;
+        users = _users; 
     }
 }
