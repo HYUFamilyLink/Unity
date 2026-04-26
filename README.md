@@ -61,9 +61,11 @@ FamilyLink/
 * **Platform**: Android
 * **Texture Compression**: **ASTC** (VR 기기)
 
-### **SoketIO 주소 설정**
-* **AppConfig.cs**: 에서 연결할 Backend Sever 주소를 지정할 수 있습니다.
-* **기본값** : http://localhost:4000
+### **AppConfig.cs 설정**
+* **BaseUrl**: 연결할 SoketIO Sever 주소 지정, **기본값** : http://localhost:4000
+* **AgoraAppID**: 아고라 앱 ID
+* **YoutubeAPI**: 유튜브 API 키
+
 
 ---
 
@@ -75,10 +77,6 @@ P2P 동기화를 위해 로컬 환경에서 랑데부 서버를 실행해야 합
 # 터미널에서 아래 명령 실행
 npx @ucl-vr/ubiq-server
 ```
-+)
-SoketIO로 받아온 방 코드를 이용하여 방을 생성,참가합니다.
-따라서 백엔드 서버의 실행도 선행되어야 합니다.
-
 ---
 
 ## 4. 사용 Asset 모음
