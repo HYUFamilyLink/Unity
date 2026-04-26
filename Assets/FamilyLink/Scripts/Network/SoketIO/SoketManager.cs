@@ -12,6 +12,9 @@ public class SocketManager : MonoBehaviour
 
     public Action<NetworkUser> OnUserJoined;
     public Action<string> OnUserLeft;
+
+    //ID,Emoji
+    public Action<string, string> OnReactionReceived;
     void Awake()
     {
         if (socketManager == null) socketManager = this;
@@ -56,12 +59,22 @@ public class SocketManager : MonoBehaviour
             var userId = JsonConvert.DeserializeObject<_LeftData_>(data.ToString().Trim('[', ']')).userId;
             OnUserLeft?.Invoke(userId);
         });
+
+        socket.OnUnityThread("user:reaction", (data) =>
+        {
+           var reactionData = JsonConvert.DeserializeObject<_ReactionData_>(data.ToString().Trim('[', ']'));
+           OnReactionReceived?.Invoke(reactionData.userId, reactionData.emoji);
+        });
     }
 
     public void LeftEvenet()
     {
+        //구독 해제
         socket.Off("room:user_joined");
         socket.Off("room:user_left");
+        socket.Off("user:reaction");
+
+        //퇴장 송신
         socket.Emit("room:leave");
     }
 }
@@ -69,4 +82,11 @@ public class SocketManager : MonoBehaviour
 public struct _LeftData_
 {
     public string userId;
+}
+
+public struct _ReactionData_
+{
+    public string userId;
+    public string nickname;
+    public string emoji;
 }

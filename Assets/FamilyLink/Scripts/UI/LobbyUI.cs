@@ -106,7 +106,6 @@ public class LobbyUI : MonoBehaviour
 
     public void _ImgButton(int num)
     {
-        Debug.Log("버튼눌림");
         StartCoroutine(ImgPost(num));
     }
 

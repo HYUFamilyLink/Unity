@@ -56,6 +56,7 @@ public class AvatarManager : MonoBehaviour
         {
             SocketManager.socketManager.OnUserJoined += HandleUserJoin;
             SocketManager.socketManager.OnUserLeft += HandleUserLeft;
+            SocketManager.socketManager.OnReactionReceived += HandleReaction;
         }
 
         RecalulateMasterPeer();
@@ -64,6 +65,12 @@ public class AvatarManager : MonoBehaviour
             "spawner", System.Reflection.BindingFlags.NonPublic 
             | System.Reflection.BindingFlags.Instance);
         spawner = (NetworkSpawner)field.GetValue(spawnManager);
+    }
+
+    public void HandleReaction(string id, string emoji)
+    {
+        if(userDict.TryGetValue(id, out Avatar avatar))
+            avatar.PlayReaction(emoji);
     }
 
     public void RecalulateMasterPeer()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FamilyLink.Network;
 using UnityEngine;
 
 using UniVRM10;
@@ -10,9 +11,7 @@ public class Avatar : MonoBehaviour
 {
     public string id;
     public string role = "phone";
-
-
-    public void SetID(string _id) { id = _id; return;}
+    public void SetID(string _id) {id = _id; return;}
 
     void Start()
     {
@@ -47,5 +46,11 @@ public class Avatar : MonoBehaviour
                 Debug.Log("표정 강제 변경 완료!");
             }
         }
+    }
+
+    public void PlayReaction(string emoji)
+    {
+        int codePoint = char.ConvertToUtf32(emoji, 0);
+        Debug.Log(id + "가 리액션 :" + codePoint);
     }
 }
