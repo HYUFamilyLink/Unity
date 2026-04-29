@@ -19,9 +19,11 @@ FamilyLink/
 ├── Scenes/              # 메인 씬 (Lobby, KaraokeRoom)
 └── Scripts/
     ├── Avatar/
+    │   ├── Avatar.cs/
     │   └── AvatarManager.cs
     ├── Core/
-    │   └── AppConfig.cs
+    │   ├── AppConfig.cs
+    │   └── SpawnPointManager.cs/
     ├── Network/
     │   ├── Agora/
     │   │   └── AgoraManager.cs

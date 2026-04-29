@@ -10,6 +10,11 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
     public bool isOwner = false;
 
     private NetworkId _networkId;
+
+    public int pointIdx;
+
+    public void SetPointIndex(int idx) {pointIdx = idx;}
+
     public NetworkId NetworkId
     {
         get => _networkId;
@@ -26,6 +31,7 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
         public Vector3 position;
         public Quaternion rotation;
         public string id;
+        public int pointIdx;
     }
 
     // 소유권 설정 (예: 로컬 플레이어가 생성한 경우 true)
@@ -43,7 +49,8 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
             {
                 position = transform.position,
                 rotation = transform.rotation,
-                id = gameObject.GetComponent<Avatar>().id
+                id = gameObject.GetComponent<Avatar>().id,
+                pointIdx = pointIdx
             }));
         }
     }
@@ -57,6 +64,8 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
             var m = JsonUtility.FromJson<Message>(message.ToString());
             transform.position = m.position;
             transform.rotation = m.rotation;
+            pointIdx = m.pointIdx;
+            SpawnPointManager.spawnPointManager.SetPoint(pointIdx, this.GetComponent<Avatar>());
 
             var avatar = gameObject.GetComponent<Avatar>();
             avatar.SetID(m.id);

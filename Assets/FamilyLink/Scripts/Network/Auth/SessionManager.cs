@@ -50,4 +50,15 @@ public class SessionManager : MonoBehaviour
     {
         users = _users; 
     }
+
+    public void JoinUser(NetworkUser user)
+    {
+        if(users.Contains(user)) return;
+        users.Add(user);
+    }
+
+    public void ExitUser(string id)
+    {
+        users.RemoveAll(u => u.id == id);
+    }
 }

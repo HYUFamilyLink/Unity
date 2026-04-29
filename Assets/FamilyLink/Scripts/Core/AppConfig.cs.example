@@ -8,6 +8,7 @@ public static class AppConfig
     public const string AuthApi = BaseUrl + "/api/auth";
     public const string RegisterUrl = AuthApi + "/register";
     public const string LoginUrl = AuthApi + "/login";
+    public const string AgoraUrl = BaseUrl + "/api/agora";
 
     // --- [소켓 경로] ---
     public const string SocketUrl = BaseUrl;

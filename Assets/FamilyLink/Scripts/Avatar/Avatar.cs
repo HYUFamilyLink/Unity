@@ -25,8 +25,8 @@ public class Avatar : MonoBehaviour
                 var data = JsonUtility.FromJson<ExtendedSpawnMessage>(entry.Value);
                 if(!string.IsNullOrEmpty(data.targetSocketId))
                 {
-                    AvatarManager.avatarManager.ReigsterAvatar(data.targetSocketId, this);
                     id = data.targetSocketId;
+                    AvatarManager.avatarManager.ReigsterAvatar(id, this);
                 }
                 break;
             }

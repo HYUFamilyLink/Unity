@@ -135,6 +135,21 @@ public class AvatarManager : MonoBehaviour
             myAvatar.GetComponent<ObjSync>().enabled = true;
             myAvatar.GetComponent<ObjSync>().SetOwner(true);
             myAvatar.GetComponent<Avatar>().SetID(currentUser.id);
+
+            List<int> idxs = new List<int>();
+            foreach(var p in roomClient.Room)
+            {
+                if (p.Key.StartsWith("seat_"))
+                {
+                    if(int.TryParse(p.Value, out int idx)) idxs.Add(idx);
+                }
+            }
+
+            int i;
+            for(i = 0; i < 6; i++) if(!idxs.Contains(i)) break;
+            SpawnPointManager.spawnPointManager.SetPoint(i, myAvatar.GetComponent<Avatar>());
+            roomClient.Room[$"seat_{currentUser.id}"] = i.ToString();
+            myAvatar.GetComponent<ObjSync>().SetPointIndex(i);
         }
     }
 
@@ -148,9 +163,12 @@ public class AvatarManager : MonoBehaviour
     public IEnumerator DespawnMyAvatarRoutine()
     {
         if(isMaster) roomClient.Room[ISMASTERIN] = "F";
+        roomClient.Room[$"seat_{currentUser.id}"] = null;
+
         //1. socket에 퇴장 call, 세션 정보 정리
         SocketManager.socketManager.LeftEvenet();
         SessionManager.sessionManager.ClearRoomData();
+        SpawnPointManager.spawnPointManager.Init();
 
         //2. 리스너/액션 구독 및 구독 해제
         SocketManager.socketManager.OnUserJoined -= HandleUserJoin;
@@ -184,6 +202,7 @@ public class AvatarManager : MonoBehaviour
     //마스터 피어만 이 작업을 수행하며, 웹 유저에 대해서만 이 작업을 수행한다
     public void HandleUserJoin(NetworkUser user)
     {
+        SessionManager.sessionManager.JoinUser(user);
         if(user.role == "vr" || !isMaster) return;
         SpawnAvatarWithID(avatarCatalogue.prefabs[user.profileimage], user.id);
     }
@@ -191,6 +210,7 @@ public class AvatarManager : MonoBehaviour
     //타 유저 삭제 루틴(웹)
     public void HandleUserLeft(string _id)
     {
+        SessionManager.sessionManager.ExitUser(_id);
         if(!userDict.ContainsKey(_id)) return;
 
         bool isWeb = userDict[_id].role != "vr" ;
@@ -218,17 +238,33 @@ public class AvatarManager : MonoBehaviour
     public IEnumerator OnAvatarOutRoutine(string id, bool isWeb)
     {
         if(!userDict.ContainsKey(id)) yield break;
-        yield return new WaitUntil(() => userDict[id].gameObject != null);
+
+        Avatar target = userDict[id];
+        userDict.Remove(id);
+
+        if(isMaster && isWeb) roomClient.Room[$"seat_{id}"] = null;
+
+        yield return new WaitUntil(() => target == null || target.gameObject != null);
+
+        if(target == null)
+        {
+            SpawnPointManager.spawnPointManager.DelPoint(target);
+            RecalulateMasterPeer();
+            yield break;
+        }
+
         yield return new WaitUntil(() => roomClient.Me != null && roomClient.Me.networkId.Valid);
         RecalulateMasterPeer();
-        if(isMaster && isWeb) spawnManager.Despawn(userDict[id].gameObject);
-
-        userDict.Remove(id);
+        SpawnPointManager.spawnPointManager.DelPoint(target);
+        if(isMaster && isWeb)
+        {
+            spawnManager.Despawn(target.gameObject);
+        }
     }
 
     public void ReigsterAvatar(string id, Avatar avatar)
     {
-        if(string.IsNullOrEmpty(id) || userDict.ContainsKey(id)) return;
+        if(string.IsNullOrEmpty(id)) return;
         userDict[id] = avatar;
     }
     
@@ -265,16 +301,30 @@ public class AvatarManager : MonoBehaviour
     public void SetWebSync(Avatar avatar = null)
     {
         if(!isMaster) return;
-        if(avatar != null) avatar.GetComponent<ObjSync>().SetOwner(isMaster);
+        if(avatar != null)
+        {
+            avatar.GetComponent<ObjSync>().SetOwner(isMaster);
+            if (isMaster)
+            {
+                int _idx = SpawnPointManager.spawnPointManager.SetPoint(avatar.GetComponent<Avatar>());
+                roomClient.Room[$"seat_{avatar.id}"] = _idx.ToString();
+                avatar.GetComponent<ObjSync>().SetPointIndex(_idx);
+            }
+        }
         else
         {
             foreach(var user in userDict)
             {
-                if(user.Value.role == "vr" || user.Value.IsDestroyed()) continue;
+                if(user.Value.role == "vr" || user.Value == null) continue;
                 user.Value.GetComponent<ObjSync>().SetOwner(isMaster);
+                if (isMaster)
+                {
+                    int _idx = SpawnPointManager.spawnPointManager.SetPoint(user.Value);
+                    roomClient.Room[$"seat_{user.Key}"] = _idx.ToString();
+                    user.Value.GetComponent<ObjSync>().SetPointIndex(_idx);
+                }
             }
         }
-
     }
 }
 
