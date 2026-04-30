@@ -41,16 +41,28 @@ PrefabInstance:
       value: 0.35381734
       objectReference: {fileID: 0}
     - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.2087991
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2238808
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6558571
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5159078012444724336, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -89,7 +101,7 @@ PrefabInstance:
       addedObject: {fileID: 6472366927069301711}
     - targetCorrespondingSourceObject: {fileID: -1728013695380148634, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1661163035726904684}
+      addedObject: {fileID: -7075050188741892226}
   m_SourcePrefab: {fileID: -3956505258223990651, guid: 5d9b56357fc943e44b934abbf68c87bf, type: 3}
 --- !u!1 &1225574368012389261 stripped
 GameObject:
@@ -110,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   role: phone
---- !u!114 &-1661163035726904684
+--- !u!114 &-7075050188741892226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +131,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1225574368012389261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6733b5ff84b1f4540ae0ab0d77afe028, type: 3}
+  m_Script: {fileID: 11500000, guid: 5191226cddd17ec408c74d86c490d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOwner: 0
+  pointIdx: 0

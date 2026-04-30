@@ -13,6 +13,10 @@ public class SocketManager : MonoBehaviour
     public Action<NetworkUser> OnUserJoined;
     public Action<string> OnUserLeft;
 
+    //music
+    public Action<string> OnTurnChanged; //턴 변경시 트리거되는건 여기에
+    public Action<PlayingVideoData> OnVideoUpdate; //
+
     //ID,Emoji
     public Action<string, string> OnReactionReceived;
     void Awake()
@@ -46,6 +50,7 @@ public class SocketManager : MonoBehaviour
 
     public void SetupEvenet()
     {
+        SessionManager.sessionManager.SetAction();
         //입장 이벤트 수신(소켓)
         socket.OnUnityThread("room:user_joined", (data) =>
         {
@@ -65,14 +70,64 @@ public class SocketManager : MonoBehaviour
            var reactionData = JsonConvert.DeserializeObject<_ReactionData_>(data.ToString().Trim('[', ']'));
            OnReactionReceived?.Invoke(reactionData.userId, reactionData.emoji);
         });
+
+        socket.OnUnityThread("room:state", (data) =>
+        {
+           //정상적인 종료시에도 송신됨
+           var vidData = JsonConvert.DeserializeObject<_VidData_>(data.ToString().Trim('[', ']'));
+           OnVideoUpdate?.Invoke(vidData.playingVideo);
+           OnTurnChanged?.Invoke(vidData.currentTurnId);
+        });
+
+        socket.OnUnityThread("song:receive_sync", (data) =>{
+           //{time : --}
+           //필요시 액션 작성
+        });
+
+        socket.OnUnityThread("song:play", (data) =>
+        {
+            var vidData = JsonConvert.DeserializeObject<PlayingVideoData>(data.ToString().Trim('[', ']'));
+            OnVideoUpdate?.Invoke(vidData);
+        });
+
+        socket.OnUnityThread("song:stop", (data) =>
+        {
+            //{} (아무 데이터도 안옴)
+            //룸 상태, 턴 제어용 스위치
+            //노래가 중단/종료될때 수신
+            Debug.Log("수신됨");
+        });
+
+        socket.OnUnityThread("song:request_sync", (data) =>
+        {
+            //내가 가수일때, 서버가 지금 내 재생 시간을 요청할때 수신
+            //실제로는 유튜브 모듈을 통해 시간을 얻어야한다
+            //지금은 디버깅을 위해 sessionManager의 StartAt 송신
+            if(SessionManager.sessionManager.currentVideo != null)
+            {
+                long startAt = SessionManager.sessionManager.currentVideo.startAt;
+                long now = System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                float time = now - startAt;
+                socket.Emit("song:send_sync", new {time = time});
+            }
+        });
     }
 
     public void LeftEvenet()
     {
         //구독 해제
+
+        //room
         socket.Off("room:user_joined");
         socket.Off("room:user_left");
+        socket.Off("room:state");
+        //user
         socket.Off("user:reaction");
+        //song
+        socket.Off("song:receive_sync");
+        socket.Off("song:request_sync");
+        socket.Off("song:play");
+        socket.Off("song:stop");
 
         //퇴장 송신
         socket.Emit("room:leave");
@@ -89,4 +144,10 @@ public struct _ReactionData_
     public string userId;
     public string nickname;
     public string emoji;
+}
+
+public struct _VidData_
+{
+    public string currentTurnId;
+    public PlayingVideoData playingVideo;
 }

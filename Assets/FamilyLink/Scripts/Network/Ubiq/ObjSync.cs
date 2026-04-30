@@ -1,20 +1,15 @@
 using UnityEngine;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
+using FamilyLink.Network;
 
 //p2p 통신간 오브젝트 동기화를 담당하는 코드
-//ubiq로 움직임 동기화가 필요한 모든 오브젝트는 이 스크립트를 포함해야 한다.
+//ubiq로 움직임 동기화가 필요한 모든 사물은 이 스크립트를 포함해야 한다.
 public class ObjSync : MonoBehaviour, INetworkSpawnable
 {
     private NetworkContext context;
     public bool isOwner = false;
-
     private NetworkId _networkId;
-
-    public int pointIdx;
-
-    public void SetPointIndex(int idx) {pointIdx = idx;}
-
     public NetworkId NetworkId
     {
         get => _networkId;
@@ -30,14 +25,11 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
     {
         public Vector3 position;
         public Quaternion rotation;
-        public string id;
-        public int pointIdx;
     }
 
-    // 소유권 설정 (예: 로컬 플레이어가 생성한 경우 true)
-    public void SetOwner(bool _isOwner)
+    public void SetOwner(bool owner)
     {
-        isOwner = _isOwner;
+        isOwner = owner;
     }
 
     void Update()
@@ -48,9 +40,7 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
             context.Send(JsonUtility.ToJson(new Message
             {
                 position = transform.position,
-                rotation = transform.rotation,
-                id = gameObject.GetComponent<Avatar>().id,
-                pointIdx = pointIdx
+                rotation = transform.rotation
             }));
         }
     }
@@ -64,12 +54,6 @@ public class ObjSync : MonoBehaviour, INetworkSpawnable
             var m = JsonUtility.FromJson<Message>(message.ToString());
             transform.position = m.position;
             transform.rotation = m.rotation;
-            pointIdx = m.pointIdx;
-            SpawnPointManager.spawnPointManager.SetPoint(pointIdx, this.GetComponent<Avatar>());
-
-            var avatar = gameObject.GetComponent<Avatar>();
-            avatar.SetID(m.id);
-            AvatarManager.avatarManager.ReigsterAvatar(m.id, avatar);
         }
     }
 }

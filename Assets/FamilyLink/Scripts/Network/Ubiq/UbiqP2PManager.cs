@@ -90,6 +90,7 @@ public class UbiqP2PManager : MonoBehaviour
         } 
 
         AgoraManager.agoraManager.AgoraConnect();
+        
     }
 
     //얘는 vr 유저의 아웃만 감지한다

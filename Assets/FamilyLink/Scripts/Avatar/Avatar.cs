@@ -15,7 +15,7 @@ public class Avatar : MonoBehaviour
 
     void Start()
     {
-        string networkId = gameObject.GetComponent<ObjSync>().NetworkId.ToString().Split('.')[0];
+        string networkId = gameObject.GetComponent<AvatarSync>().NetworkId.ToString().Split('.')[0];
         var room = AvatarManager.avatarManager.spawnManager.roomClient.Room;
 
         foreach(var entry in room)

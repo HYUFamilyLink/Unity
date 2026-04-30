@@ -44,6 +44,7 @@ public class AvatarManager : MonoBehaviour
     void Awake()
     {
         if(avatarManager == null) avatarManager = this;
+        else Destroy(this);
     }
 
     public void StartSetup()
@@ -132,9 +133,9 @@ public class AvatarManager : MonoBehaviour
         {
             userDict[currentUser.id] = null;
             GameObject myAvatar = spawnManager.SpawnWithPeerScope(avatarCatalogue.prefabs[currentUser.profileimage]);
-            myAvatar.GetComponent<ObjSync>().enabled = true;
-            myAvatar.GetComponent<ObjSync>().SetOwner(true);
             myAvatar.GetComponent<Avatar>().SetID(currentUser.id);
+            myAvatar.GetComponent<AvatarSync>().SetOwner(true);
+            myAvatar.GetComponent<AvatarSync>().SetMine();
 
             List<int> idxs = new List<int>();
             foreach(var p in roomClient.Room)
@@ -149,7 +150,10 @@ public class AvatarManager : MonoBehaviour
             for(i = 0; i < 6; i++) if(!idxs.Contains(i)) break;
             SpawnPointManager.spawnPointManager.SetPoint(i, myAvatar.GetComponent<Avatar>());
             roomClient.Room[$"seat_{currentUser.id}"] = i.ToString();
-            myAvatar.GetComponent<ObjSync>().SetPointIndex(i);
+            myAvatar.GetComponent<AvatarSync>().SetPointIndex(i);
+            myAvatar.GetComponent<AvatarSync>().SetTransform();
+
+            myAvatar.GetComponent<AvatarSync>().enabled = true;
         }
     }
 
@@ -220,7 +224,7 @@ public class AvatarManager : MonoBehaviour
     //오브젝트 생성 완료시 호출
     private void OnAvatarSpawned(GameObject go, IRoom room, IPeer peer, NetworkSpawnOrigin origin)
     {
-        go.GetComponent<ObjSync>().enabled = true;
+        go.GetComponent<AvatarSync>().enabled = true;
         //vr 유저 매핑
         if(peer != null)
         {
@@ -303,12 +307,12 @@ public class AvatarManager : MonoBehaviour
         if(!isMaster) return;
         if(avatar != null)
         {
-            avatar.GetComponent<ObjSync>().SetOwner(isMaster);
+            avatar.GetComponent<AvatarSync>().SetOwner(isMaster);
             if (isMaster)
             {
                 int _idx = SpawnPointManager.spawnPointManager.SetPoint(avatar.GetComponent<Avatar>());
                 roomClient.Room[$"seat_{avatar.id}"] = _idx.ToString();
-                avatar.GetComponent<ObjSync>().SetPointIndex(_idx);
+                avatar.GetComponent<AvatarSync>().SetPointIndex(_idx);
             }
         }
         else
@@ -316,12 +320,12 @@ public class AvatarManager : MonoBehaviour
             foreach(var user in userDict)
             {
                 if(user.Value.role == "vr" || user.Value == null) continue;
-                user.Value.GetComponent<ObjSync>().SetOwner(isMaster);
+                user.Value.GetComponent<AvatarSync>().SetOwner(isMaster);
                 if (isMaster)
                 {
                     int _idx = SpawnPointManager.spawnPointManager.SetPoint(user.Value);
                     roomClient.Room[$"seat_{user.Key}"] = _idx.ToString();
-                    user.Value.GetComponent<ObjSync>().SetPointIndex(_idx);
+                    user.Value.GetComponent<AvatarSync>().SetPointIndex(_idx);
                 }
             }
         }

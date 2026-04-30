@@ -48,8 +48,8 @@ public class LobbyUI : MonoBehaviour
                 // 3. 데이터가 정상적으로 담겼다면 씬 전환
                 if (state != null && !string.IsNullOrEmpty(state.roomId)) {
                     Debug.Log($"<color=cyan>[Lobby]</color> 검증 완료. 씬 이동: {state.joinCode}");
-                    SessionManager.sessionManager.SetRoomID(state.joinCode);
-                    SessionManager.sessionManager.SetRoomUser(state.participants);
+                    SessionManager.sessionManager.SetRoom(state.joinCode, state.currentTurnId, state.participants, state.playingVideo);
+                    //씬 이동이 포함되어 끊고 가야한다
                     socket.Off("room:state");
                     SocketManager.socketManager.SetupEvenet();
                     SceneManager.LoadScene("KaraokeRoom");
@@ -154,6 +154,8 @@ public class RoomStateResponse {
     public string joinCode;
     public string status;
     public List<NetworkUser> participants;
+    public string currentTurnId;
+    public PlayingVideoData playingVideo;
 }
 
 [System.Serializable]
@@ -162,4 +164,13 @@ public class UpdateResponse
     public bool success;
     public NetworkUser user;
     public string token;
+}
+
+[System.Serializable]
+public class PlayingVideoData {
+    public string videoId;
+    public string title;
+    public string artist;
+    public string singerId;
+    public long startAt;
 }

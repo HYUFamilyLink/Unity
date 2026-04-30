@@ -833,11 +833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1178791450436251564, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_CameraYOffset
-      value: 0
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1178791450436251564, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_RequestedTrackingOriginMode
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_Name
@@ -3320,6 +3320,13 @@ MonoBehaviour:
   valid_time: 0
   roomID: 
   users: []
+  currentTurnId: 
+  currentVideo:
+    videoId: 
+    title: 
+    artist: 
+    singerId: 
+    startAt: 0
 --- !u!114 &1034969750
 MonoBehaviour:
   m_ObjectHideFlags: 0
