@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>SocketIOClient</id>
+    <version>4.0.3</version>
+    <authors>doghappy</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/doghappy/socket.io-client-csharp</projectUrl>
+    <description>socket.io-client implemention for .NET</description>
+    <tags>socket.io-client</tags>
+    <repository type="github" url="https://github.com/doghappy/socket.io-client-csharp" commit="c1519e1c2435bb84ed2a523cd5207db149fde069" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="SocketIOClient.Common" version="4.0.0" exclude="Build,Analyzers" />
+        <dependency id="SocketIOClient.Serializer" version="4.0.0.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="10.0.3" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging" version="10.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="10.0.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="SocketIOClient.Common" version="4.0.0" exclude="Build,Analyzers" />
+        <dependency id="SocketIOClient.Serializer" version="4.0.0.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="10.0.3" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging" version="10.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Net.Http" version="4.3.4" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="10.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
