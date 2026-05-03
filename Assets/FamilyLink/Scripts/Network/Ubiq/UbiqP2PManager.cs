@@ -3,9 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using Ubiq.Messaging;
-using UnityEngine.Events;
 using Ubiq.Spawning;
-using System.Linq;
 
 public class UbiqP2PManager : MonoBehaviour
 {

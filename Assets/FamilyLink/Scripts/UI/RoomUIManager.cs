@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using FamilyLink.Network;
+using FamilyLink;
 
 // KaraokeRoom 씬의 UI를 관리하는 스크립트
 // 디버깅용 UI에 가깝다

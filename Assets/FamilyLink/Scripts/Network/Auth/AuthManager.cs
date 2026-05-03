@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
-using FamilyLink.Network;
+using FamilyLink;
 using System;
 using Newtonsoft.Json;
 
@@ -27,7 +27,7 @@ public class AuthManager : MonoBehaviour
         StartCoroutine(AuthRequest(AppConfig.LoginUrl, json));
     }
 
-    private IEnumerator AuthRequest(string url, String json)
+    private IEnumerator AuthRequest(string url, string json)
     {
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
@@ -56,10 +56,4 @@ public class AuthManager : MonoBehaviour
             }
         }
     }
-}
-
-public class AuthResponse
-{
-    public string token;
-    public NetworkUser user;
 }

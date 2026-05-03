@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FamilyLink.Network;
+using FamilyLink;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,7 +1,6 @@
 using UnityEngine;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
-using FamilyLink.Network;
 
 //p2p 통신간 오브젝트 동기화를 담당하는 코드
 //ubiq로 움직임 동기화가 필요한 모든 사물은 이 스크립트를 포함해야 한다.

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using FamilyLink.Network;
+using FamilyLink;
 using UnityEngine.Networking;
 using Org.BouncyCastle.Ocsp;
 using System.Text;
@@ -146,31 +146,4 @@ public class LobbyUI : MonoBehaviour
             }
         }
     }
-}
-
-[System.Serializable]
-public class RoomStateResponse {
-    public string roomId;
-    public string joinCode;
-    public string status;
-    public List<NetworkUser> participants;
-    public string currentTurnId;
-    public PlayingVideoData playingVideo;
-}
-
-[System.Serializable]
-public class UpdateResponse
-{
-    public bool success;
-    public NetworkUser user;
-    public string token;
-}
-
-[System.Serializable]
-public class PlayingVideoData {
-    public string videoId;
-    public string title;
-    public string artist;
-    public string singerId;
-    public long startAt;
 }

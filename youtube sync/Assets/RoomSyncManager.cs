@@ -16,9 +16,9 @@ public class RoomSyncManager : MonoBehaviour
     public GameObject loadingOverlay;   
 
     [Header("Room & User Config")]
-    public string serverUrl = "http://127.0.0.1:3000"; 
-    public string userId = "unity_user_123";         
-    public string roomId = "test_room";        
+    public string serverUrl;
+    public string userId;         
+    public string roomId;        
 
     private SocketIO socket;
     private YoutubeClient youtubeClient;

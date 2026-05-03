@@ -1,7 +1,6 @@
 using UnityEngine;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
-using UnityEngine.UIElements;
 using System;
 
 //p2p 통신간 아바타 동기화를 담당하는 코드

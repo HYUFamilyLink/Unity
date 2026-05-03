@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using FamilyLink;
 
 //Lobby에서 UI 변화를 관장하는 스크립트
 public class UIManager : MonoBehaviour
@@ -74,19 +75,4 @@ public class UIManager : MonoBehaviour
 
     public void ChangeValueName(string value) => _name = value;
     public void ChangeValueBirth(string value) => _birth = value;
-}
-
-[Serializable]
-public class RegisterData {
-    public string name;
-    public string email;
-    public string password;
-    public string role;
-}
-
-[Serializable]
-public class LoginData {
-    public string name;
-    public string password;
-    public string role;
 }

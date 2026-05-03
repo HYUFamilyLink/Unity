@@ -16,6 +16,7 @@ FamilyLink/
 │   ├── Background/      # 배경 프리팹 및 에셋
 │   ├── Light/           # 광원 효과에 사용되는 에셋
 │   └── Objects/         # 사물 프리팹 및 에셋
+├── Prefab/              # 프리펩
 ├── Scenes/              # 메인 씬 (Lobby, KaraokeRoom)
 └── Scripts/
     ├── Avatar/
@@ -23,6 +24,7 @@ FamilyLink/
     │   └── AvatarManager.cs
     ├── Core/
     │   ├── AppConfig.cs
+    │   ├── ClassConfig.cs
     │   └── SpawnPointManager.cs/
     ├── Network/
     │   ├── Agora/
@@ -31,13 +33,18 @@ FamilyLink/
     │   │   ├── AuthManager.cs
     │   │   └── SessionManager.cs
     │   ├── SoketIO/
-    │   │   ├── NetworkUser.cs
-    │   │   └── SoketManager.cs
+    │   │   ├── SoketManager.cs
+    │   │   └── VideoManager.cs
     │   └── Ubiq/
+    │       ├── AvatarSync.cs
     │       ├── ObjSync.cs
     │       └── UbiqP2PManager.cs
+    ├── Room/
+    │   ├── Mic.cs
+    │   └── ObjectManager.cs
     └── UI/
         ├── LobbyUI.cs
+        ├── RoomUIManager.cs
         └── UIManager.cs
 ```
 
@@ -56,7 +63,9 @@ FamilyLink/
 | **XR Hands** | `Unity Registry` > `XR Hands` | 핸드 트래킹 지원 |
 | **ParrelSync** | `https://github.com/VeriorPies/ParrelSync` | (선택) 멀티플레이 디버깅 |
 | **Unity glTFast** | `com.unity.cloud.gltfast` | glTF 파일 사용 |
-
+| **Animation rigging** | `com.unity.animation.rigging` | 아바타 리깅 |
+| **NuGet for unity** | `https://github.com/GlitchEnzo/NuGetForUnity/releases` | Nuget |
+| **YoutubeExplode** | `-` | NuGet으로 설치 |
 ---
 
 ## 2. 기타 설정 (Settings)

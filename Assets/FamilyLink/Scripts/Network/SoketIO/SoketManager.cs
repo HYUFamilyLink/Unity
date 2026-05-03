@@ -2,7 +2,7 @@ using UnityEngine;
 using SocketIOClient;
 using System;
 using System.Collections.Generic;
-using FamilyLink.Network;
+using FamilyLink;
 using Newtonsoft.Json;
 
 public class SocketManager : MonoBehaviour
@@ -16,6 +16,9 @@ public class SocketManager : MonoBehaviour
     //music
     public Action<string> OnTurnChanged; //턴 변경시 트리거되는건 여기에
     public Action<PlayingVideoData> OnVideoUpdate; //
+    public Action OnSongStop;
+    public Action OnSyncRequested;
+    public Action<double> OnSyncReceived;
 
     //ID,Emoji
     public Action<string, string> OnReactionReceived;
@@ -80,8 +83,8 @@ public class SocketManager : MonoBehaviour
         });
 
         socket.OnUnityThread("song:receive_sync", (data) =>{
-           //{time : --}
-           //필요시 액션 작성
+           var syncData = JsonConvert.DeserializeObject<_SyncData_>(data.ToString().Trim('[', ']'));
+           OnSyncReceived?.Invoke(syncData.time);
         });
 
         socket.OnUnityThread("song:play", (data) =>
@@ -95,7 +98,7 @@ public class SocketManager : MonoBehaviour
             //{} (아무 데이터도 안옴)
             //룸 상태, 턴 제어용 스위치
             //노래가 중단/종료될때 수신
-            Debug.Log("수신됨");
+            OnSongStop?.Invoke();
         });
 
         socket.OnUnityThread("song:request_sync", (data) =>
@@ -103,13 +106,7 @@ public class SocketManager : MonoBehaviour
             //내가 가수일때, 서버가 지금 내 재생 시간을 요청할때 수신
             //실제로는 유튜브 모듈을 통해 시간을 얻어야한다
             //지금은 디버깅을 위해 sessionManager의 StartAt 송신
-            if(SessionManager.sessionManager.currentVideo != null)
-            {
-                long startAt = SessionManager.sessionManager.currentVideo.startAt;
-                long now = System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                float time = now - startAt;
-                socket.Emit("song:send_sync", new {time = time});
-            }
+            OnSyncRequested?.Invoke();
         });
     }
 
@@ -150,4 +147,9 @@ public struct _VidData_
 {
     public string currentTurnId;
     public PlayingVideoData playingVideo;
+}
+
+public struct _SyncData_
+{
+    public double time;
 }

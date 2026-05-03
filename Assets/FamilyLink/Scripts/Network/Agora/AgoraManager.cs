@@ -4,6 +4,7 @@ using UnityEngine;
 using Agora.Rtc;
 using UnityEngine.Networking;
 using Org.BouncyCastle.Ocsp;
+using FamilyLink;
 
 public class AgoraManager : MonoBehaviour
 {
@@ -80,12 +81,4 @@ public class AgoraManager : MonoBehaviour
             rtcEngine = null;
         }
     }
-}
-
-[SerializeField]
-public class AgoraTokenResponse
-{
-    public string token;
-    public string uid;
-    public string appId;
 }
