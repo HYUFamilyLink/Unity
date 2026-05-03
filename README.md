@@ -24,8 +24,7 @@ FamilyLink/
     │   └── AvatarManager.cs
     ├── Core/
     │   ├── AppConfig.cs
-    │   ├── ClassConfig.cs
-    │   └── SpawnPointManager.cs/
+    │   └── ClassConfig.cs
     ├── Network/
     │   ├── Agora/
     │   │   └── AgoraManager.cs
@@ -41,7 +40,8 @@ FamilyLink/
     │       └── UbiqP2PManager.cs
     ├── Room/
     │   ├── Mic.cs
-    │   └── ObjectManager.cs
+    │   ├── ObjectManager.cs
+    │   └── SpawnPointManager.cs
     └── UI/
         ├── LobbyUI.cs
         ├── RoomUIManager.cs
@@ -65,7 +65,7 @@ FamilyLink/
 | **Unity glTFast** | `com.unity.cloud.gltfast` | glTF 파일 사용 |
 | **Animation rigging** | `com.unity.animation.rigging` | 아바타 리깅 |
 | **NuGet for unity** | `https://github.com/GlitchEnzo/NuGetForUnity/releases` | Nuget |
-| **YoutubeExplode** | `-` | NuGet으로 설치 |
+| **YoutubeExplode** | `NuGet으로 설치` | 유튜브 재생 |
 ---
 
 ## 2. 기타 설정 (Settings)

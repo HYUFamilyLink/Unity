@@ -14,11 +14,18 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
     private P2PTransform right => new P2PTransform{pos = rightHand.position, rot = rightHand.rotation};
     public Transform Head;
     private P2PTransform head => new P2PTransform{pos = Head.position, rot = Head.rotation};
+    public Transform Body;
+    private P2PTransform body => new P2PTransform{pos = Body.position, rot = Body.rotation};
+    private Vector3 initialBodyPos;
+    private Quaternion initialBodyRot;
+    
+
 
     [Header("XR Transform")]
     public Transform xrLeft;
     public Transform xrRight;
     public Transform xrHead;
+    public Transform xrOrigin;
 
     [Header("Network")]
     private NetworkContext context;
@@ -47,6 +54,7 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
         public P2PTransform leftHand;
         public P2PTransform rightHand;
         public P2PTransform head;
+        public P2PTransform body;
         public string id;
         public int pointIdx;
     }
@@ -63,43 +71,45 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
     }
     public void SetTransform()
     {
-        GameObject xrOrigin = GameObject.Find("XR Origin (XR Rig)");
-        xrOrigin.transform.position = gameObject.transform.position;
-        xrOrigin.transform.rotation = gameObject.transform.rotation;
-        Debug.Log("완료0");
-        Debug.Log(xrOrigin.transform);
+        Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>(true);
+        foreach(var child in allChildren) child.gameObject.layer = 3;
+        xrOrigin = GameObject.Find("XR Origin (XR Rig)").transform;
+        xrHead = xrOrigin.Find("Camera Offset/Main Camera");
+        xrLeft = xrOrigin.Find("Camera Offset/Left Controller");
+        xrRight = xrOrigin.Find("Camera Offset/Right Controller");
 
-        xrHead = xrOrigin.transform.Find("Camera Offset/Main Camera");
-        xrLeft = xrOrigin.transform.Find("Camera Offset/Left Controller");
-        xrRight = xrOrigin.transform.Find("Camera Offset/Right Controller");
-        Debug.Log("완료1");
-        Debug.Log(xrLeft);
+        xrOrigin.position = this.transform.position; 
+        xrOrigin.rotation = this.transform.rotation;
 
-        xrLeft.position = leftHand.position;
-        Debug.Log("완료2");
+        initialBodyPos = Body.position; 
+        initialBodyRot = Body.rotation;
 
-        xrRight.position = rightHand.position;
-        Debug.Log("완료3");
-
-        xrHead.position = Head.position;
-        Debug.Log("완료4");
+        Debug.Log("XR 트랜스폼 매핑 완료");
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (isOwner && context.Id != NetworkId.Null)
         {
             //본인 아바타일 경우 컨트롤러 위치 찾아서 지정
             if (isMyAvatar)
             {
-                leftHand.position = xrLeft.position;
+                // 1. 머리 회전만 동기화 (위치는 고정하여 아바타가 소파를 절대 벗어나지 않게 함)
+                Head.rotation = xrHead.rotation;
+
+                // 2. 핵심 로직: 실제 내 머리(HMD)와 손(Controller) 사이의 물리적 벡터 거리(Offset)만 계산
+                Vector3 leftOffset = xrLeft.position - xrHead.position;
+                Vector3 rightOffset = xrRight.position - xrHead.position;
+
+                // 3. 가상 아바타 머리를 기준으로 똑같은 거리만큼 손 위치를 적용
+                leftHand.position = Head.position + leftOffset;
                 leftHand.rotation = xrLeft.rotation * Quaternion.Euler(0, 90f, 0);
 
-                rightHand.position = xrRight.position;
+                rightHand.position = Head.position + rightOffset;
                 rightHand.rotation = xrRight.rotation * Quaternion.Euler(0, -90f, 0);
 
-                Head.position = xrHead.position + xrHead.right * 0.094f;
-                Head.rotation = xrHead.rotation;
+                // 🚨 주의: Body(골반) 위치를 고정하는 코드는 완전히 삭제했습니다!
+                // 이렇게 놔두면 유니티 애니메이터가 알아서 다리를 쫙 펴고 예쁘게 서있게/앉아있게 만듭니다.
             }
 
             // 소유자라면 자신의 위치 정보를 다른 클라이언트에게 전송
@@ -108,6 +118,7 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
                 leftHand = left,
                 rightHand = right,
                 head = head,
+                body = body,
                 id = gameObject.GetComponent<Avatar>().id,
                 pointIdx = pointIdx
             }));
@@ -127,6 +138,8 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
             rightHand.rotation = m.rightHand.rot;
             Head.position = m.head.pos;
             Head.rotation = m.head.rot;
+            Body.position = m.body.pos;
+            Body.rotation = m.body.rot;
             pointIdx = m.pointIdx;
             SpawnPointManager.spawnPointManager.SetPoint(pointIdx, this.GetComponent<Avatar>());
             var avatar = gameObject.GetComponent<Avatar>();
