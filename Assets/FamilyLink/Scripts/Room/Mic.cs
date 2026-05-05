@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class Mic : MonoBehaviour
 {
-    public GameObject traceTarget;
+    public Transform traceTarget;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +18,8 @@ public class Mic : MonoBehaviour
     {
         if(traceTarget != null)
         {
-            transform.position = traceTarget.transform.position;
+            transform.position = traceTarget.position;
+            transform.rotation = traceTarget.rotation;
         }
     }
 }

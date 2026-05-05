@@ -80,7 +80,7 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
 
         xrOrigin.position = this.transform.position; 
         xrOrigin.rotation = this.transform.rotation;
-
+        
         initialBodyPos = Body.position; 
         initialBodyRot = Body.rotation;
 

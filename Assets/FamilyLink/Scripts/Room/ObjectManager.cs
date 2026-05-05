@@ -42,8 +42,10 @@ public class ObjectManager : MonoBehaviour
         bool isTurn = currentUser.id == uid;
 
         skipButton.gameObject.SetActive(isTurn);
-        
+
         //mic.GetComponent<ObjSync>().SetOwner(isTurn);
-        mic.traceTarget = AvatarManager.avatarManager.userDict[uid].gameObject;
+        var target = AvatarManager.avatarManager.userDict[uid];
+        if (isTurn) mic.traceTarget = target.GetComponent<AvatarSync>().xrRight;
+        else mic.traceTarget = target.transform.Find("AvatarRoot/Hips/Spine/Chest/Right_Shoulder/Right_UpperArm/Right_ForeArm/RightHand/RightHandIndex1/RightHandIndex2");
     }
 }
