@@ -10,9 +10,31 @@ using UniVRM10;
 public class Avatar : MonoBehaviour
 {
     public string id;
+    public uint agoraUid;
     public string role = "phone";
     public void SetID(string _id) {id = _id; return;}
 
+    private uint GetAgoraUid(string strId)
+    {
+        if (string.IsNullOrEmpty(strId)) return 0;
+
+        // 1. 초기값 설정 (JS와 동일하게 5381)
+        uint hash = 5381;
+
+        // 2. 문자열을 순회하며 해시 계산
+        foreach (char c in strId)
+        {
+            // 3. 산술 오버플로우 발생 시 자동으로 하위 비트만 남기도록 unchecked 사용
+            // (JS의 비트 연산과 동일한 효과를 냄)
+            unchecked
+            {
+                // (hash << 5) + hash 는 수학적으로 hash * 33 과 동일함
+                hash = ((hash << 5) + hash) + (uint)c;
+            }
+        }
+
+        return hash;
+    }
     void Start()
     {
         string networkId = gameObject.GetComponent<AvatarSync>().NetworkId.ToString().Split('.')[0];
@@ -32,6 +54,7 @@ public class Avatar : MonoBehaviour
             }
         }
         if(role == "phone") AvatarManager.avatarManager.SetWebSync(this);
+        agoraUid = GetAgoraUid(id);
     }
 
 

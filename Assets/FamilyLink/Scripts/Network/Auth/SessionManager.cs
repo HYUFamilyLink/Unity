@@ -16,6 +16,7 @@ public class SessionManager : MonoBehaviour
 
     [Header("Room Data")]
     public string roomID;
+    public string joinCode;
     public List<NetworkUser> users;
     public string currentTurnId;
     public PlayingVideoData currentVideo;
@@ -45,9 +46,10 @@ public class SessionManager : MonoBehaviour
         currentUser = user;
     }
 
-    public void SetRoom(string roomId, string turnId, List<NetworkUser> users, PlayingVideoData vidData)
+    public void SetRoom(string roomId, string code , string turnId, List<NetworkUser> users, PlayingVideoData vidData)
     {
         SetRoomID(roomId);
+        SetJoincode(code);
         SetRoomUser(users);
         SetTurnId(turnId);
         SetPlaying(vidData);
@@ -75,6 +77,12 @@ public class SessionManager : MonoBehaviour
     public void SetRoomID(string id)
     {
         roomID = id;
+    }
+
+    public void SetJoincode(string code)
+    {
+        joinCode = code;
+        Debug.Log(joinCode);
     }
 
     public void SetRoomUser(List<NetworkUser> _users)

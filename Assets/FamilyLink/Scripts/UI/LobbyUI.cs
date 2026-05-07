@@ -48,7 +48,7 @@ public class LobbyUI : MonoBehaviour
                 // 3. 데이터가 정상적으로 담겼다면 씬 전환
                 if (state != null && !string.IsNullOrEmpty(state.roomId)) {
                     Debug.Log($"<color=cyan>[Lobby]</color> 검증 완료. 씬 이동: {state.joinCode}");
-                    SessionManager.sessionManager.SetRoom(state.joinCode, state.currentTurnId, state.participants, state.playingVideo);
+                    SessionManager.sessionManager.SetRoom(state.roomId, state.joinCode, state.currentTurnId, state.participants, state.playingVideo);
                     //씬 이동이 포함되어 끊고 가야한다
                     socket.Off("room:state");
                     SocketManager.socketManager.SetupEvenet();

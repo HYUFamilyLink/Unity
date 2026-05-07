@@ -15,7 +15,7 @@ public class MicInputControler : MonoBehaviour
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
             Permission.RequestUserPermission(Permission.Microphone);
-            Debug.Log("🎤 마이크 권한을 요청했습니다.");
+            Debug.Log("마이크 권한을 요청했습니다.");
         }
         #endif
 
@@ -27,7 +27,7 @@ public class MicInputControler : MonoBehaviour
         {
             // 보통 0번이 시스템 기본 마이크입니다.
             micName = Microphone.devices[0]; 
-            Debug.Log("🎤 인풋을 받을 마이크: " + micName);
+            Debug.Log("인풋을 받을 마이크: " + micName);
 
             // 2. 마이크 인풋 받기 시작
             // 파라미터: (마이크 이름, 루프 여부, 녹음 길이(초), 샘플링 레이트)
@@ -45,7 +45,7 @@ public class MicInputControler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ 연결된 마이크를 찾을 수 없습니다!");
+            Debug.LogError("연결된 마이크를 찾을 수 없습니다!");
         }
     }
 

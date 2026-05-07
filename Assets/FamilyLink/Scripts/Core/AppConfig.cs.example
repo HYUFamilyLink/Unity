@@ -18,6 +18,7 @@ public static class AppConfig
 
     // --- [Agora App ID] ---
     public const string AgoraAppID = "your-app-id-here";
+    public const string AGORA_APP_CERTIFICATE = "your-app-certificate-here";
     public const float AgoraOffsetSec = 0.15f;
 
     // --- [Youtube API] ---
