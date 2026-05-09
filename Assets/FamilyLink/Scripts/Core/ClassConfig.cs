@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine.Timeline;
 
 namespace FamilyLink
 {
@@ -50,6 +52,19 @@ namespace FamilyLink
     }
 
     [Serializable]
+    public class RoomListState
+    {
+        public string id;
+        public string joinCode;
+        public string status;
+        public string hostName;
+        public int hostProfileImage;
+        public int participantCount;
+        public string currentSong;
+        public string currentTurnId;
+    }
+
+    [Serializable]
     public class AgoraTokenResponse
     {
         public string token;
@@ -70,5 +85,27 @@ namespace FamilyLink
         public string name;
         public string password;
         public string role;
+    }
+
+    public struct _LeftData_
+    {
+        public string userId;
+    }
+
+    public struct _ReactionData_
+    {
+        public string userId;
+        public string nickname;
+        public string emoji;
+    }
+    public struct _VidData_
+    {
+        public string currentTurnId;
+        public PlayingVideoData playingVideo;
+    }
+
+    public struct _SyncData_
+    {
+        public double time;
     }
 }

@@ -57,11 +57,11 @@ public class SocketManager : MonoBehaviour
         //입장 이벤트 수신(소켓)
         socket.OnUnityThread("room:user_joined", (data) =>
         {
-            var newUser = JsonConvert.DeserializeObject<NetworkUser>(data.ToString().Trim('[', ']'));
+            var newUser = JsonConvert.DeserializeObject<NetworkUser>(data.ToString());
             OnUserJoined?.Invoke(newUser);
         });
-
-        //퇴장 이벤트 수신(소켓)
+        
+        //퇴장 이벤트 수신(소켓).Trim('[', ']')
         socket.OnUnityThread("room:user_left", (data) =>
         {
             var userId = JsonConvert.DeserializeObject<_LeftData_>(data.ToString().Trim('[', ']')).userId;
@@ -129,27 +129,4 @@ public class SocketManager : MonoBehaviour
         //퇴장 송신
         socket.Emit("room:leave");
     }
-}
-
-public struct _LeftData_
-{
-    public string userId;
-}
-
-public struct _ReactionData_
-{
-    public string userId;
-    public string nickname;
-    public string emoji;
-}
-
-public struct _VidData_
-{
-    public string currentTurnId;
-    public PlayingVideoData playingVideo;
-}
-
-public struct _SyncData_
-{
-    public double time;
 }

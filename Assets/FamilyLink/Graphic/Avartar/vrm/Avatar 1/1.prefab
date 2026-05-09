@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
+  agoraUid: 0
   role: phone
 --- !u!114 &-8949237357906885142
 MonoBehaviour:

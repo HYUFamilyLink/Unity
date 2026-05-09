@@ -49,3 +49,13 @@ public class ObjectManager : MonoBehaviour
         else mic.traceTarget = target.transform.Find("AvatarRoot/Hips/Spine/Chest/Right_Shoulder/Right_UpperArm/Right_ForeArm/RightHand/RightHandIndex1/RightHandIndex2");
     }
 }
+
+/*
+const REACTION_DATA = [
+  { id: 'kick', icon: '🥁', sounds: ['/sounds/kick1.mp3','/sounds/kick2.mp3'] },
+  { id: 'clap', icon: '👏', sounds: ['/sounds/clap1.mp3', '/sounds/clap2.mp3'] },
+  { id: 'bell', icon: '🛎️', sounds: ['/sounds/chime1.mp3'] },
+  { id: 'drum', icon: '🪘', sounds: ['/sounds/drum1.mp3','/sounds/drum2.mp3'] }, 
+  { id: 'tambourine', icon: '🪇', sounds: ['/sounds/tam1.mp3', '/sounds/tam2.mp3'] },
+];
+*/

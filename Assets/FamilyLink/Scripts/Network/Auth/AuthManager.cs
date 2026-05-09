@@ -4,6 +4,7 @@ using System.Collections;
 using FamilyLink;
 using System;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 //lobby에서 로그인/회원가입 등의 인증만을 담당하는 스크립트
 public class AuthManager : MonoBehaviour

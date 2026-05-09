@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using Org.BouncyCastle.Ocsp;
 using System.Text;
 using NUnit.Framework.Constraints;
 using System.Collections;
+using System;
+using Unity.Tutorials.Core.Editor;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -15,8 +18,15 @@ public class LobbyUI : MonoBehaviour
     public static LobbyUI lobbyUI;
     SocketIOUnity socket => SocketManager.socketManager.socket;
 
+    [SerializeField]
     [Header("Profile")]
     public GameObject profileImg;
+    public Image profileSelect;
+    public List<Sprite> profiles;
+
+    [Header("RoomScroll")]
+    public GameObject roomItemPrefab;
+    public Transform roomListContent;
 
     void Awake()
     {
@@ -27,6 +37,15 @@ public class LobbyUI : MonoBehaviour
     private void OnEnable()
     {
         if (SocketManager.socketManager?.socket == null) return;
+        if (SessionManager.sessionManager.currentUser != null) profileSelect.sprite = profiles[SessionManager.sessionManager.currentUser.profileimage];
+
+        StartCoroutine(GetRoomRoutine());
+
+        socket.OnUnityThread("rooms:updated", (data) => {
+                    print(data.ToString());
+                    List<RoomListState> _r = JsonConvert.DeserializeObject<List<List<RoomListState>>>(data.ToString())[0];
+                    RoomUpdate(_r);
+                });
 
         socket.OnUnityThread("room:state", (data) => {
             try {
@@ -51,6 +70,7 @@ public class LobbyUI : MonoBehaviour
                     SessionManager.sessionManager.SetRoom(state.roomId, state.joinCode, state.currentTurnId, state.participants, state.playingVideo);
                     //씬 이동이 포함되어 끊고 가야한다
                     socket.Off("room:state");
+                    socket.Off("rooms:updated");
                     SocketManager.socketManager.SetupEvenet();
                     SceneManager.LoadScene("KaraokeRoom");
                 }
@@ -65,6 +85,30 @@ public class LobbyUI : MonoBehaviour
         socket.OnUnityThread("error", (data) => {
             Debug.LogError($"<color=red>[Lobby]</color> 접속 에러: {data}");
         });
+    }
+
+    IEnumerator GetRoomRoutine()
+    {
+        yield return new WaitUntil(SessionManager.sessionManager.authToken.IsNotNullOrEmpty);
+        using(UnityWebRequest request = UnityWebRequest.Get(AppConfig.RoomsUrl))
+        {
+            string token = SessionManager.sessionManager.authToken;
+            request.SetRequestHeader("Authorization", "Bearer " + token);
+
+            yield return request.SendWebRequest();
+
+            if(request.result == UnityWebRequest.Result.Success)
+            {
+                string json = request.downloadHandler.text;
+                List<RoomListState> _rooms_ = JsonConvert.DeserializeObject<List<RoomListState>>(json);
+
+                RoomUpdate(_rooms_);
+            }
+            else
+            {
+                Debug.LogError($"요청 실패 : {request.error}");
+            }
+        }
     }
 
     public void OnRandomMatchClick()
@@ -137,12 +181,35 @@ public class LobbyUI : MonoBehaviour
                     SessionManager.sessionManager.SetSession(response.token, response.user);
 
                     profileImg.SetActive(false);
+                    profileSelect.sprite = profiles[num];
                     Debug.Log("변경 완료");
                 }
             }
             else
             {
                 Debug.LogError("업데이트 실패" + request.error);
+            }
+        }
+    }
+
+    public void RoomUpdate(List<RoomListState> roomList)
+    {
+        foreach (Transform child in roomListContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 2. 서버에서 받은 목록만큼 새로 생성
+        foreach (var roomData in roomList)
+        {
+            // 프리팹 생성
+            GameObject roomObj = Instantiate(roomItemPrefab, roomListContent);
+
+            // 데이터 전달
+            RoomItemUI itemScript = roomObj.GetComponent<RoomItemUI>();
+            if (itemScript != null)
+            {
+                itemScript.SetRoomData(roomData);
             }
         }
     }
