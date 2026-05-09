@@ -7,6 +7,7 @@ using FamilyLink;
 using UnityEngine.Android;
 using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
+using TMPro;
 
 public class AgoraManager : MonoBehaviour
 {
@@ -58,7 +59,6 @@ public class AgoraManager : MonoBehaviour
             if(request.result == UnityWebRequest.Result.Success)
             {
                 AgoraTokenResponse response = JsonUtility.FromJson<AgoraTokenResponse>(request.downloadHandler.text);
-                Debug.Log("실@행");
                 InitAgora();
                 JoinChannel(response.token);
             }
@@ -80,6 +80,7 @@ public class AgoraManager : MonoBehaviour
 
         context.channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
         context.audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_CHORUS;
+
         rtcEngine.Initialize(context);
         ///
         rtcEngine.InitEventHandler(new AgoraEventHandler(this));
@@ -94,8 +95,7 @@ public class AgoraManager : MonoBehaviour
         rtcEngine.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
 
         //rtcEngine.EnableInEarMonitoring(true, (int)EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE);
-        rtcEngine.SetInEarMonitoringVolume(100);
-
+        //rtcEngine.SetInEarMonitoringVolume(100);
 
         SocketManager.socketManager.OnTurnChanged += AgoraTrigger;
         isConnected = true;
@@ -130,7 +130,7 @@ public class AgoraManager : MonoBehaviour
 
         rtcEngine.JoinChannel(token, roomID, GetAgoraUid(uid), options);
         Debug.Log($"아고라 연결 성공 - 채널 : {roomID}, 계정 : {GetAgoraUid(uid)}");
-        rtcEngine.MuteLocalAudioStream(false);
+        rtcEngine.MuteLocalAudioStream(uid != SessionManager.sessionManager.currentTurnId);
     }
 
     public void QuitChannel()
@@ -155,14 +155,33 @@ public class AgoraManager : MonoBehaviour
     {
         if(!isConnected) return;
         rtcEngine.AdjustRecordingSignalVolume(volume);
-        rtcEngine.AdjustPlaybackSignalVolume(100);
+        if(isSpeakerOn)rtcEngine.AdjustPlaybackSignalVolume(100);
     }
 
-    public void SetMute()
+    private bool isMicOn = true;
+    public void SetMute(TextMeshProUGUI text)
     {
-        rtcEngine.MuteLocalAudioStream(true);       // 내 마이크 끄기
-        rtcEngine.AdjustPlaybackSignalVolume(100);  // 스피커 켜기
-        Debug.Log("🎧 [수신 전용 모드] 마이크 끔, 스피커 켬");
+        rtcEngine.MuteLocalAudioStream(isMicOn);
+        isMicOn = !isMicOn;
+        if(isMicOn) text.text = "마이크\n켜짐";
+        else text.text = "마이크\n꺼짐";
+        Debug.Log("마이크 상태 변경");
+    }
+
+    private bool isSpeakerOn = true;
+    public void SetSpeakerOff(TextMeshProUGUI text)
+    {
+        isSpeakerOn = !isSpeakerOn;
+        if (isSpeakerOn)
+        {
+            text.text = "음성 수신\n켜짐";
+            rtcEngine.AdjustPlaybackSignalVolume(100);  // 스피커 켜기
+        }
+        else
+        {
+            text.text = "음성 수신\n꺼짐";
+            rtcEngine.AdjustPlaybackSignalVolume(0); // 스피커 끄기
+        }
     }
 
     internal class AgoraEventHandler : IRtcEngineEventHandler
