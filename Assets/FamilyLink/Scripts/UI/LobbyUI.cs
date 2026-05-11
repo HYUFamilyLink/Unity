@@ -139,7 +139,7 @@ public class LobbyUI : MonoBehaviour
         if (socket != null) socket.Disconnect();
 
         SessionManager.sessionManager.ClearSession();
-        UIManager.uiManager.UIChange(); 
+        SceneManager.LoadScene("Login");
     }
 
     public void SetProfileImg()

@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 using FamilyLink;
+using UnityEngine.SceneManagement;
 
-//Lobby에서 UI 변화를 관장하는 스크립트
+//Login에서 UI 변화를 관장하는 스크립트
 public class UIManager : MonoBehaviour
 {
     public static UIManager uiManager;
@@ -16,9 +17,6 @@ public class UIManager : MonoBehaviour
     public TMP_InputField nameInput;
     public TMP_InputField birthInput;
 
-    [Header("LobbyUI Slots")]
-    public Canvas lobby;
-
     private void Awake()
     {
         if (uiManager == null) uiManager = this;
@@ -26,16 +24,7 @@ public class UIManager : MonoBehaviour
     }
     public void UIChange()
     {
-        if (login.gameObject.activeSelf)
-        {
-            login.gameObject.SetActive(false);
-            lobby.gameObject.SetActive(true);
-        }
-        else
-        {
-            lobby.gameObject.SetActive(false);
-            login.gameObject.SetActive(true);
-        }
+        SceneManager.LoadScene("Lobby");
     }
 
     public void OnRegisterClick()

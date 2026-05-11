@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/FamilyLink/Scenes/Login.unity
+    guid: c215dc0ffc7e2464caed3851926b8201
+  - enabled: 1
     path: Assets/FamilyLink/Scenes/Lobby.unity
     guid: e298c3e1c91ebdf489a7062104bea107
   - enabled: 1
