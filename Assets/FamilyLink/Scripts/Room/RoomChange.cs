@@ -1,55 +1,23 @@
 using UnityEngine;
-using TMPro;
+using TMPro; // TextMeshPro를 사용한다면 필수
 
-public class ThemeManager : MonoBehaviour
+public class RoomManager : MonoBehaviour
 {
-    [System.Serializable]
-    public struct ThemeData
-    {
-        public string themeName;
-        public Material skyboxMaterial;
-        public GameObject roomObject; 
-    }
+    [SerializeField] private GameObject[] themeWalls;
 
-    public System.Collections.Generic.List<ThemeData> themes;
-    public TextMeshProUGUI titleText;
-    
-    private int currentIndex = 0;
-
-    void Start()
+    // 드롭다운 전용 함수 (인자값이 int로 들어옵니다)
+    public void OnDropdownValueChanged(int index)
     {
-        UpdateTheme();
-    }
-
-    public void NextTheme()
-    {
-        currentIndex = (currentIndex + 1) % themes.Count;
-        UpdateTheme();
-    }
-
-    public void PrevTheme()
-    {
-        currentIndex = (currentIndex - 1 + themes.Count) % themes.Count;
-        UpdateTheme();
-    }
-
-    private void UpdateTheme()
-    {
-        for (int i = 0; i < themes.Count; i++)
+        // 모든 테마 비활성화
+        for (int i = 0; i < themeWalls.Length; i++)
         {
-            if (themes[i].roomObject != null)
-            {
-                themes[i].roomObject.SetActive(i == currentIndex);
-            }
+            themeWalls[i].SetActive(false);
         }
 
-        RenderSettings.skybox = themes[currentIndex].skyboxMaterial;
-
-        if (titleText != null)
+        // 선택한 번호만 활성화
+        if (index >= 0 && index < themeWalls.Length)
         {
-            titleText.text = themes[currentIndex].themeName;
+            themeWalls[index].SetActive(true);
         }
-
-        DynamicGI.UpdateEnvironment();
     }
 }
