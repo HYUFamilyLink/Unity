@@ -31,7 +31,6 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
     private NetworkContext context;
     public bool isOwner = false;
     private NetworkId _networkId;
-    private string socketId;
     private bool isMyAvatar = false;
 
     [Header("SpawnPoint")]
@@ -69,6 +68,7 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
     {
         isMyAvatar = true;
     }
+    
     public void SetTransform()
     {
         Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>(true);

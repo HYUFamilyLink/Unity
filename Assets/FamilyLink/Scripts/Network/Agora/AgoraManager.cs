@@ -13,6 +13,7 @@ public class AgoraManager : MonoBehaviour
 {
     public static AgoraManager agoraManager;
     private IRtcEngine rtcEngine;
+    private ILocalSpatialAudioEngine spatialAudio;
     private bool isConnected = false;
     public int volume;
 
@@ -21,6 +22,7 @@ public class AgoraManager : MonoBehaviour
 
     private string roomID => SessionManager.sessionManager.roomID;
     private string uid => SessionManager.sessionManager.currentUser.id;
+
     private void Awake()
     {
         if(agoraManager == null) agoraManager = this;
@@ -40,13 +42,11 @@ public class AgoraManager : MonoBehaviour
     //이 함수가 Start와 유사한 역할을 담당한다
     public void AgoraConnect()
     {
-        Debug.Log("실행2");
         StartCoroutine(GetTokenAndJoin());
     }
 
     IEnumerator GetTokenAndJoin()
     {
-        Debug.Log("실행3");
         string _url = AppConfig.AgoraUrl + $"/token?roomId={roomID}";
         Debug.Log($"접속 시도 : {_url}");
         using(UnityWebRequest request = UnityWebRequest.Get(_url))
@@ -71,7 +71,6 @@ public class AgoraManager : MonoBehaviour
 
     private void InitAgora()
     {
-        Debug.Log("테스트");
         if(rtcEngine != null) return;
 
         rtcEngine = RtcEngine.CreateAgoraRtcEngine();
@@ -94,11 +93,22 @@ public class AgoraManager : MonoBehaviour
         
         rtcEngine.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
 
+        spatialAudio = rtcEngine.GetLocalSpatialAudioEngine();
+        spatialAudio.Initialize();
+
+        spatialAudio.SetAudioRecvRange(50f); // 가청 범위 설정
+        spatialAudio.SetDistanceUnit(1f); // 단위 설정
+
         //rtcEngine.EnableInEarMonitoring(true, (int)EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE);
         //rtcEngine.SetInEarMonitoringVolume(100);
 
         SocketManager.socketManager.OnTurnChanged += AgoraTrigger;
         isConnected = true;
+    }
+
+    public void SetAttenuation(uint uid, double amount)
+    {
+        spatialAudio.SetRemoteAudioAttenuation(uid, amount, false);
     }
 
     private uint GetAgoraUid(string strId)
@@ -181,6 +191,34 @@ public class AgoraManager : MonoBehaviour
         {
             text.text = "음성 수신\n꺼짐";
             rtcEngine.AdjustPlaybackSignalVolume(0); // 스피커 끄기
+        }
+    }
+
+    public void UpdateRemotePosition(uint remoteUid, Vector3 pos, Vector3 forward)
+    {
+        if (spatialAudio != null && remoteUid != 0)
+        {
+            RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo();
+            // 위치 설정
+            posInfo.position = new float[] { pos.x, pos.y, pos.z };
+            // 방향 설정 (아바타 머리의 forward 벡터)
+            posInfo.forward = new float[] { forward.x, forward.y, forward.z };
+
+            spatialAudio.UpdateRemotePosition(remoteUid, posInfo);
+        }
+    }
+
+    public void UpdateSelfPosition(Vector3 pos, Vector3 forward, Vector3 right, Vector3 up)
+    {
+        if (spatialAudio != null && isConnected)
+        {
+            float[] posArr = new float[] { pos.x, pos.y, pos.z };
+            float[] fwdArr = new float[] { forward.x, forward.y, forward.z };
+            float[] rgtArr = new float[] { right.x, right.y, right.z };
+            float[] upArr = new float[] { up.x, up.y, up.z };
+
+            // Listener(나)의 위치 정보를 업데이트해야 비로소 거리 계산이 시작됩니다.
+            spatialAudio.UpdateSelfPosition(posArr, fwdArr, rgtArr, upArr);
         }
     }
 

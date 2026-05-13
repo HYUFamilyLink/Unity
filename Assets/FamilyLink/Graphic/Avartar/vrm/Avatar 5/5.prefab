@@ -330,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1728013695380148634, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
       propertyPath: m_Name
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -1728013695380148634, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
       propertyPath: m_Layer
@@ -654,6 +654,7 @@ MonoBehaviour:
   id: 
   agoraUid: 0
   role: phone
+  head: {fileID: 977386444297861584}
 --- !u!114 &-8949237357906885142
 MonoBehaviour:
   m_ObjectHideFlags: 0

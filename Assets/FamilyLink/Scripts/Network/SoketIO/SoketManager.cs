@@ -57,7 +57,7 @@ public class SocketManager : MonoBehaviour
         //입장 이벤트 수신(소켓)
         socket.OnUnityThread("room:user_joined", (data) =>
         {
-            var newUser = JsonConvert.DeserializeObject<NetworkUser>(data.ToString());
+            var newUser = JsonConvert.DeserializeObject<NetworkUser>(data.ToString().Trim('[', ']'));
             OnUserJoined?.Invoke(newUser);
         });
         

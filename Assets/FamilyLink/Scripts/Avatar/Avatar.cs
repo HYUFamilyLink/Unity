@@ -14,6 +14,15 @@ public class Avatar : MonoBehaviour
     public string role = "phone";
     public void SetID(string _id) {id = _id; return;}
 
+    private bool isMyAvatar = false;
+    public Transform head;
+
+    public void SetMine()
+    {
+        isMyAvatar = true;
+        AgoraManager.agoraManager.SetAttenuation(agoraUid, 0f);
+    }
+
     private uint GetAgoraUid(string strId)
     {
         if (string.IsNullOrEmpty(strId)) return 0;
@@ -55,18 +64,42 @@ public class Avatar : MonoBehaviour
         }
         if(role == "phone") AvatarManager.avatarManager.SetWebSync(this);
         agoraUid = GetAgoraUid(id);
+        AgoraManager.agoraManager.SetAttenuation(agoraUid, 0.3f);
     }
 
 
     void Update() {
-    // 아래 화살표 누르면 blink 표정 적용
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            Debug.Log("asdfsafd");
-            var vrm10 = GetComponent<Vrm10Instance>(); // [cite: 99, 113]
-            if (vrm10 != null) {
-                // UI가 없어도 코드로는 강제 실행됩니다
-                vrm10.Runtime.Expression.SetWeight(ExpressionKey.Blink, 1.0f); // [cite: 111, 128]
-                Debug.Log("표정 강제 변경 완료!");
+        if (!isMyAvatar)
+        {
+            // 아래 화살표 누르면 blink 표정 적용
+            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                Debug.Log("asdfsafd");
+                var vrm10 = GetComponent<Vrm10Instance>(); // [cite: 99, 113]
+                if (vrm10 != null) {
+                    // UI가 없어도 코드로는 강제 실행됩니다
+                    vrm10.Runtime.Expression.SetWeight(ExpressionKey.Blink, 1.0f); // [cite: 111, 128]
+                    Debug.Log("표정 강제 변경 완료!");
+                }
+            }
+            if(AgoraManager.agoraManager != null && agoraUid != 0)
+            {
+                AgoraManager.agoraManager.UpdateRemotePosition(
+                    agoraUid,
+                    head.position,
+                    head.forward
+                );
+            }
+        }
+        else
+        {
+            if(AgoraManager.agoraManager != null && agoraUid != 0)
+            {
+                AgoraManager.agoraManager.UpdateSelfPosition(
+                    head.position,
+                    head.forward,
+                    head.right,
+                    head.up
+                );
             }
         }
     }

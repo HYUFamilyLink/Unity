@@ -654,6 +654,7 @@ MonoBehaviour:
   id: 
   agoraUid: 0
   role: phone
+  head: {fileID: 977386444297861584}
 --- !u!114 &-8949237357906885142
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -136,6 +136,7 @@ public class AvatarManager : MonoBehaviour
             myAvatar.GetComponent<Avatar>().SetID(currentUser.id);
             myAvatar.GetComponent<AvatarSync>().SetOwner(true);
             myAvatar.GetComponent<AvatarSync>().SetMine();
+            myAvatar.GetComponent<Avatar>().SetMine();
 
             List<int> idxs = new List<int>();
             foreach(var p in roomClient.Room)

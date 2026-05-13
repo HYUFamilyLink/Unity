@@ -99,13 +99,7 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# Photon Settings (AppID가 포함된 핵심 파일)
-/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
-/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset.meta
-
-# 포톤 채팅이나 보이스
-/Assets/Photon/PhotonChat/Resources/PhotonChatSettings.asset
-/Assets/Photon/PhotonVoice/Resources/PhotonVoiceSettings.asset
-
 # AppConfig
 Assets/FamilyLink/Scripts/Core/AppConfig.cs
+
+Assets/FamilyLink/Scripts/AIAgent*
