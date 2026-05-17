@@ -108,6 +108,14 @@ public class AgoraManager : MonoBehaviour
 
     public void SetAttenuation(uint uid, double amount)
     {
+        StartCoroutine(SetAttenuationRoutine(uid, amount));
+    }
+
+    private IEnumerator SetAttenuationRoutine(uint uid, double amount)
+    {
+        // InitAgora()가 완료되어 spatialAudio가 null이 아닐 때까지 대기
+        yield return new WaitUntil(() => spatialAudio != null);
+        
         spatialAudio.SetRemoteAudioAttenuation(uid, amount, false);
     }
 
