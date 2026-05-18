@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FamilyLink;
+using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class ObjectManager : MonoBehaviour
     private NetworkUser currentUser;
 
     [Header("제어 대상 오브젝트")]
+    public GameObject Search;
     public Button skipButton;
     public Mic mic;
 
@@ -42,6 +44,7 @@ public class ObjectManager : MonoBehaviour
         bool isTurn = currentUser.id == uid;
 
         skipButton.gameObject.SetActive(isTurn);
+        Search.gameObject.SetActive(isTurn);
 
         //mic.GetComponent<ObjSync>().SetOwner(isTurn);
         var target = AvatarManager.avatarManager.userDict[uid];

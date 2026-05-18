@@ -33,6 +33,17 @@ namespace FamilyLink
     }
     
     [Serializable]
+    public class SearchResponse
+    {
+        public string id;
+        public string title;
+        public string artist;
+        public string thumbnail;
+        public string songNo;
+        public List<string> tags;
+    }
+
+    [Serializable]
     public class PlayingVideoData {
         public string videoId;
         public string title;
