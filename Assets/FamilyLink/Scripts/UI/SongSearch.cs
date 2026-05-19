@@ -10,14 +10,31 @@ using UnityEngine.UIElements;
 
 public class SongSearch : MonoBehaviour
 {
+    public static SongSearch songSearch;
     SocketIOUnity socket => SocketManager.socketManager.socket;
     string token => SessionManager.sessionManager.authToken;
-    string songTitle;
+    string songTitle = "";
     public List<SearchResponse> songs;
 
     [Header("필드")]
-    public ScrollView view;
-    
+    public GameObject songItemPrefab;
+    public Transform songListContent;
+
+    void Start()
+    {
+        if(songSearch == null) songSearch = this;
+        else Destroy(this);
+    }
+
+    void OnEnable()
+    {
+        songTitle = "";
+        foreach (Transform child in songListContent)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     public void OnSelect()
     {
         // 키보드, 음성인식 모듈 활성화
@@ -63,6 +80,24 @@ public class SongSearch : MonoBehaviour
 
     void ViewSelect()
     {
-        //스크롤 뷰 구현
+        foreach (Transform child in songListContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach(var song in songs)
+        {
+            GameObject songObj = Instantiate(songItemPrefab, songListContent);
+            SongItemUI songScript = songObj.GetComponent<SongItemUI>();
+            if (songScript != null)
+            {
+                songScript.SetSong(song);
+            }
+        }
+    }
+
+    public void SelectEnd()
+    {
+        gameObject.SetActive(false);
     }
 }
