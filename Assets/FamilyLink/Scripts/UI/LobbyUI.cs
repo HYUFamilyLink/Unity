@@ -34,10 +34,22 @@ public class LobbyUI : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
+    [Header("Friends")]
+    public Transform friendListContent;
+    public GameObject friendItemPrefab;
+
     private void OnEnable()
     {
         if (SocketManager.socketManager?.socket == null) return;
         if (SessionManager.sessionManager.currentUser != null) profileSelect.sprite = profiles[SessionManager.sessionManager.currentUser.profileimage];
+
+        SocketManager.socketManager.ListenFriendUpdate();
+
+        if (FriendManager.instance != null)
+        {
+            FriendManager.instance.OnFriendDataLoaded += RefreshFriendListUI;
+            FriendManager.instance.LoadAll();
+        }
 
         StartCoroutine(GetRoomRoutine());
 
@@ -190,6 +202,44 @@ public class LobbyUI : MonoBehaviour
                 Debug.LogError("업데이트 실패" + request.error);
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        if (FriendManager.instance != null)
+            FriendManager.instance.OnFriendDataLoaded -= RefreshFriendListUI;
+    }
+
+    // 친구 목록 UI 갱신
+    public void RefreshFriendListUI()
+    {
+        if (friendListContent == null || friendItemPrefab == null) return;
+
+        foreach (Transform child in friendListContent) Destroy(child.gameObject);
+
+        var statuses = FriendManager.instance?.friendStatuses;
+        if (statuses == null) return;
+
+        foreach (var kv in statuses)
+        {
+            string targetId = kv.Key;
+            FriendStatus fs = kv.Value;
+
+            GameObject item = Instantiate(friendItemPrefab, friendListContent);
+            FriendItemUI ui = item.GetComponent<FriendItemUI>();
+            if (ui != null) ui.SetData(targetId, fs.nickname, fs.profileImage, fs.status);
+        }
+    }
+
+    // 친구 신청 / 수락 / 삭제 (버튼 콜백용)
+    public void OnFriendActionClick(string targetId)
+    {
+        string status = FriendManager.instance?.GetStatus(targetId);
+        var sm = SocketManager.socketManager;
+
+        if (status == null)           sm.SendFriendRequest(targetId);
+        else if (status == "received") sm.AcceptFriend(targetId);
+        else                           sm.RemoveFriend(targetId);
     }
 
     public void RoomUpdate(List<RoomListState> roomList)

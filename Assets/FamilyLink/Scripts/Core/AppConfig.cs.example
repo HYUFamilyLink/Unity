@@ -9,6 +9,9 @@ public static class AppConfig
     public const string RegisterUrl = AuthApi + "/register";
     public const string LoginUrl = AuthApi + "/login";
     public const string AgoraUrl = BaseUrl + "/api/agora";
+    public const string RoomsUrl = BaseUrl + "/api/rooms";
+    public const string FriendListUrl = BaseUrl + "/api/friends/list";
+    public const string FriendStatusesUrl = BaseUrl + "/api/friends/statuses";
 
     // --- [소켓 경로] ---
     public const string SocketUrl = BaseUrl;
