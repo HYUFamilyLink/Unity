@@ -22,6 +22,9 @@ public class SocketManager : MonoBehaviour
 
     //ID,Emoji
     public Action<string, string> OnReactionReceived;
+
+    // friend: fromId, status ("friend"|"sent"|"received"|null)
+    public Action<string, string> OnFriendUpdate;
     void Awake()
     {
         if (socketManager == null) socketManager = this;
@@ -112,21 +115,37 @@ public class SocketManager : MonoBehaviour
 
     public void LeftEvenet()
     {
-        //구독 해제
-
-        //room
         socket.Off("room:user_joined");
         socket.Off("room:user_left");
         socket.Off("room:state");
-        //user
         socket.Off("user:reaction");
-        //song
         socket.Off("song:receive_sync");
         socket.Off("song:request_sync");
         socket.Off("song:play");
         socket.Off("song:stop");
 
-        //퇴장 송신
         socket.Emit("room:leave");
     }
+
+    public void ListenFriendUpdate()
+    {
+        socket.Off("friend:update");
+        socket.OnUnityThread("friend:update", (data) =>
+        {
+            var d = JsonConvert.DeserializeObject<_FriendUpdateData_>(data.ToString().Trim('[', ']'));
+            OnFriendUpdate?.Invoke(d.fromId, d.status);
+        });
+    }
+
+    public void SendFriendRequest(string targetId) =>
+        socket.Emit("friend:request", new { targetId });
+
+    public void AcceptFriend(string targetId) =>
+        socket.Emit("friend:accept", new { targetId });
+
+    public void RemoveFriend(string targetId) =>
+        socket.Emit("friend:remove", new { targetId });
+
+    public void InviteFriend(string friendId, string roomId, string joinCode, string currentSong, int participantCount) =>
+        socket.Emit("room:send_invites", new { invitedFriends = new[] { friendId }, roomId, joinCode, currentSong, participantCount });
 }

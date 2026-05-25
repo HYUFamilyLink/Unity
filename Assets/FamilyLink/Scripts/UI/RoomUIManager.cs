@@ -67,10 +67,23 @@ public class RoomUIManager : MonoBehaviour
 
     // --- [사용자 액션 발송 로직] ---
 
-    // UI 버튼 이벤트에 연결 (내 차례 혹은 현재 곡 넘기기)
     public void SkipTurn()
     {
         Debug.Log("차례 넘기기 요청");
         SocketManager.socketManager.socket.Emit("turn:skip");
+    }
+
+    // 룸에서 친구 초대 (친구 ID 전달)
+    public void InviteFriend(string friendId)
+    {
+        var session = SessionManager.sessionManager;
+        SocketManager.socketManager.InviteFriend(
+            friendId,
+            session.roomID,
+            session.joinCode,
+            session.currentVideo?.title ?? "대기 중",
+            session.users?.Count ?? 1
+        );
+        Debug.Log($"[Room] 친구 초대 전송: {friendId}");
     }
 }

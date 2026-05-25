@@ -120,4 +120,26 @@ namespace FamilyLink
     {
         public double time;
     }
+
+    [Serializable]
+    public class FriendUser
+    {
+        public string id;
+        public string nickname;
+        public int profileImage;
+    }
+
+    [Serializable]
+    public class FriendStatus
+    {
+        public string status; // "friend" | "sent" | "received" | null
+        public string nickname;
+        public int profileImage;
+    }
+
+    public struct _FriendUpdateData_
+    {
+        public string fromId;
+        public string status;
+    }
 }
