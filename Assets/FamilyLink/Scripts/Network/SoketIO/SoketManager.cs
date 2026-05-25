@@ -71,7 +71,7 @@ public class SocketManager : MonoBehaviour
         socket.OnUnityThread("user:reaction", (data) =>
         {
            var reactionData = JsonConvert.DeserializeObject<_ReactionData_>(data.ToString().Trim('[', ']'));
-           OnReactionReceived?.Invoke(reactionData.userId, reactionData.emoji);
+           OnReactionReceived?.Invoke(reactionData.userId, reactionData.reactionId);
         });
 
         socket.OnUnityThread("room:state", (data) =>

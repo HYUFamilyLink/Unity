@@ -10,6 +10,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Hands.Gestures;
+using UnityEngine.Animations;
+using UnityEditor.Animations;
 
 //아바타 생성, 관리, 소켓-ubiq간 매핑
 public class AvatarManager : MonoBehaviour
@@ -68,10 +70,10 @@ public class AvatarManager : MonoBehaviour
         spawner = (NetworkSpawner)field.GetValue(spawnManager);
     }
 
-    public void HandleReaction(string id, string emoji)
+    public void HandleReaction(string id, string reactionId)
     {
         if(userDict.TryGetValue(id, out Avatar avatar))
-            avatar.PlayReaction(emoji);
+            avatar.PlayReaction(reactionId);
     }
 
     public void RecalulateMasterPeer()

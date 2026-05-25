@@ -107,6 +107,7 @@ namespace FamilyLink
     {
         public string userId;
         public string nickname;
+        public string reactionId;
         public string emoji;
     }
     public struct _VidData_

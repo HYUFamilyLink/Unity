@@ -620,7 +620,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   songs: []
-  songView: {fileID: 272082152}
   songItemPrefab: {fileID: 2677292839258465523, guid: b4c7ba9181fda8c458697f6fb4401457, type: 3}
   songListContent: {fileID: 1063970972}
 --- !u!1 &169779039
@@ -676,7 +675,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   songs: []
-  songView: {fileID: 0}
   songItemPrefab: {fileID: 0}
   songListContent: {fileID: 0}
 --- !u!114 &169779042
@@ -1352,7 +1350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 0.000009536743}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1001 &649944569
