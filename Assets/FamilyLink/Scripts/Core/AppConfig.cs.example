@@ -13,6 +13,7 @@ public static class AppConfig
     public const string SongUrl = BaseUrl + "/api/songs?q=";
     public const string FriendListUrl = BaseUrl + "/api/friends/list";
     public const string FriendStatusesUrl = BaseUrl + "/api/friends/statuses";
+    public const string STTUrl = BaseUrl + "/api/ai/transcribe";
 
     // --- [소켓 경로] ---
     public const string SocketUrl = BaseUrl;

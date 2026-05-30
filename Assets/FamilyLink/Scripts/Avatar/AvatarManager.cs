@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.Hands.Gestures;
 using UnityEngine.Animations;
 using UnityEditor.Animations;
+using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
 
 //아바타 생성, 관리, 소켓-ubiq간 매핑
 public class AvatarManager : MonoBehaviour
@@ -36,6 +38,7 @@ public class AvatarManager : MonoBehaviour
     public NetworkSpawnManager spawnManager;
     RoomClient roomClient => spawnManager.roomClient;
     NetworkSpawner spawner;
+
     [SerializeField]
     public PrefabCatalogue avatarCatalogue;
     public bool isMaster;
@@ -43,10 +46,18 @@ public class AvatarManager : MonoBehaviour
     private const string MASTER_ID = "MASTERID";
     private const string ISMASTERIN = "MASTERINFLAG";
 
+    [SerializeField]
+    public List<ReactionMapping> reactions;
+    public Dictionary<string, ReactionMapping> reactionDict = new Dictionary<string, ReactionMapping>();
+
     void Awake()
     {
         if(avatarManager == null) avatarManager = this;
         else Destroy(this);
+        foreach(var item in reactions)
+        {
+            if(!reactionDict.ContainsKey(item.id)) reactionDict.Add(item.id, item);
+        }
     }
 
     public void StartSetup()
@@ -74,6 +85,7 @@ public class AvatarManager : MonoBehaviour
     {
         if(userDict.TryGetValue(id, out Avatar avatar))
             if(avatar.role == "phone") avatar.PlayReaction(reactionId);
+            else avatar.PlayReactionVr(reactionId);
     }
 
     public void RecalulateMasterPeer()

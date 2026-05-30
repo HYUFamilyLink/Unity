@@ -20,7 +20,7 @@ public class SocketManager : MonoBehaviour
     public Action OnSyncRequested;
     public Action<double> OnSyncReceived;
 
-    //ID,Emoji
+    //ID,reactionId
     public Action<string, string> OnReactionReceived;
 
     // friend: fromId, status ("friend"|"sent"|"received"|null)

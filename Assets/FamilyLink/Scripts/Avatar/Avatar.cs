@@ -27,8 +27,11 @@ public class Avatar : MonoBehaviour
     private Animator animator => gameObject.GetComponent<Animator>();
     public string currentReaction = "";
     public int counter;
+    Coroutine hideTimer;
+    public float objShowTime = 1f;
 
     [Header("Reaction Objects")]
+    AudioSource audioSource;
     public GameObject tambourine;
     public GameObject drum;
 
@@ -63,6 +66,7 @@ public class Avatar : MonoBehaviour
     {
         string networkId = gameObject.GetComponent<AvatarSync>().NetworkId.ToString().Split('.')[0];
         var room = AvatarManager.avatarManager.spawnManager.roomClient.Room;
+        audioSource = this.GetComponent<AudioSource>();
 
         foreach(var entry in room)
         {
@@ -123,6 +127,7 @@ public class Avatar : MonoBehaviour
         }
     }
 
+    //웹앱 유저용
     public void PlayReaction(string reactionId)
     {
         Debug.Log(id + "가 리액션 :" + reactionId);
@@ -131,22 +136,73 @@ public class Avatar : MonoBehaviour
         if (currentReaction == reactionId)
         {
             counter++;
+            PlaySound(reactionId);
             return;
         }
 
-        if (animator != null && animator.enabled)
-        {
-            // 2. 다른 리액션으로 바뀌는 거라면 이전 오브젝트 싹 다 끄기
-            HideAllReactionObj();
+        // 2. 다른 리액션으로 바뀌는 거라면 이전 오브젝트 싹 다 끄기
+        HideAllReactionObj();
 
-            // 3. 상태 잠금 및 애니메이터 트리거 발동
-            currentReaction = reactionId;
-            animator.SetTrigger(reactionId);
-        }
+        // 3. 상태 잠금 및 애니메이터 트리거 발동
+        currentReaction = reactionId;
+        animator.SetTrigger(reactionId);
     }
-    private void HideAllReactionObj()
+    public void HideAllReactionObj()
     {
         if (tambourine != null) tambourine.SetActive(false);
         if (drum != null) drum.SetActive(false);
+    }
+
+    //vr 유저용
+    //기본 1초간 들고 있는다
+    //다른 리액션을 하거나 1초가 지나면 비활성화
+    public void PlayReactionVr(string reactionId)
+    {
+        if(hideTimer != null)
+        {
+            StopCoroutine(hideTimer);
+        }
+
+        if (currentReaction == reactionId)
+        {
+            PlaySound(reactionId);
+            hideTimer = StartCoroutine(HideObjTimer());
+            return;
+        }
+
+        HideAllReactionObj();
+        ReactionObjShow(reactionId);
+        PlaySound(reactionId);
+        hideTimer = StartCoroutine(HideObjTimer());
+    }
+
+    IEnumerator HideObjTimer()
+    {
+        yield return new WaitForSeconds(objShowTime);
+
+        HideAllReactionObj();
+        hideTimer = null;
+    }
+
+    public void ReactionObjShow(string reactionId)
+    {
+        switch (reactionId)
+        {
+            case "tambourine":
+                tambourine.SetActive(true);
+                return;
+            case "drum":
+                drum.SetActive(true);
+                return;
+            default:
+                return;
+        }
+    }
+
+    public void PlaySound(string reactionId)
+    {
+        ReactionMapping reaction = AvatarManager.avatarManager.reactionDict[reactionId];
+        AudioClip clip = reaction.sound[Random.Range(0, reaction.sound.Count)];
+        audioSource.PlayOneShot(clip);
     }
 }

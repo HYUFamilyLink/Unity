@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Timeline;
 
 namespace FamilyLink
@@ -141,5 +142,13 @@ namespace FamilyLink
     {
         public string fromId;
         public string status;
+    }
+
+    [Serializable]
+    public class ReactionMapping
+    {
+        public string id;
+        public string emoji; // \ 가 생략된 U000 값 실제 사용시 \를 직접 붙여줘야한다
+        public List<AudioClip> sound;
     }
 }

@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Hand
-  - Tamborine
   - Bell
   - Drum
+  - Tambourine
   layers:
   - Default
   - TransparentFX
