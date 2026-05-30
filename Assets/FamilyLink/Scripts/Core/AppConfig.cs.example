@@ -10,6 +10,7 @@ public static class AppConfig
     public const string LoginUrl = AuthApi + "/login";
     public const string AgoraUrl = BaseUrl + "/api/agora";
     public const string RoomsUrl = BaseUrl + "/api/rooms";
+    public const string SongUrl = BaseUrl + "/api/songs?q=";
     public const string FriendListUrl = BaseUrl + "/api/friends/list";
     public const string FriendStatusesUrl = BaseUrl + "/api/friends/statuses";
 

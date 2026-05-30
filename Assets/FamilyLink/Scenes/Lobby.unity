@@ -1319,6 +1319,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9c48297a6eab0c14ab63684a84583462, type: 3}
   roomItemPrefab: {fileID: 2677292839258465523, guid: 3ea112d3ca06b5b478b0019f823fc741, type: 3}
   roomListContent: {fileID: 1888659811}
+  friendListContent: {fileID: 0}
+  friendItemPrefab: {fileID: 0}
 --- !u!1 &548265999
 GameObject:
   m_ObjectHideFlags: 0

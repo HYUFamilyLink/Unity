@@ -646,7 +646,7 @@ MonoBehaviour:
   agoraUid: 0
   role: phone
   head: {fileID: 977386444297861584}
-  animeTime: 0
+  animeTime: 1
   tambourine: {fileID: 7856048424649894574}
   drumStick: {fileID: 0}
 --- !u!114 &-8949237357906885142

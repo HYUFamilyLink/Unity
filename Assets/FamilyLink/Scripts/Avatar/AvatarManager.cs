@@ -73,7 +73,7 @@ public class AvatarManager : MonoBehaviour
     public void HandleReaction(string id, string reactionId)
     {
         if(userDict.TryGetValue(id, out Avatar avatar))
-            avatar.PlayReaction(reactionId);
+            if(avatar.role == "phone") avatar.PlayReaction(reactionId);
     }
 
     public void RecalulateMasterPeer()

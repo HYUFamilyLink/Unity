@@ -29,6 +29,7 @@ public class SongSearch : MonoBehaviour
     void OnEnable()
     {
         songTitle = "";
+        if(songListContent.childCount < 1) return;
         foreach (Transform child in songListContent)
         {
             Destroy(child.gameObject);

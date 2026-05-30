@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Principal;
 using FamilyLink;
 using NUnit.Framework.Constraints;
+using Org.BouncyCastle.Crypto.Agreement.JPake;
 using UniGLTF.SpringBoneJobs;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.Scripting;
 using UniVRM10;
 
 //아바타 고유 정보 등을 처리 및 보유하는 스크립트
@@ -20,15 +24,13 @@ public class Avatar : MonoBehaviour
     private bool isMyAvatar = false;
     public Transform head;
 
-    [Header("Animation Setting")]
-    private Coroutine animeRoutine;
     private Animator animator => gameObject.GetComponent<Animator>();
-    public float animeTime;
-    private string nowAnime = "";
+    public string currentReaction = "";
+    public int counter;
 
     [Header("Reaction Objects")]
     public GameObject tambourine;
-    public GameObject drumStick;
+    public GameObject drum;
 
     public void SetMine()
     {
@@ -75,12 +77,15 @@ public class Avatar : MonoBehaviour
                 break;
             }
         }
-        if(role == "phone") AvatarManager.avatarManager.SetWebSync(this);
-        else gameObject.GetComponent<Animator>().enabled = false;
+        if(role == "phone")
+        {
+            AvatarManager.avatarManager.SetWebSync(this);
+            gameObject.GetComponent<RigBuilder>().enabled = false;
+        }
+        //else gameObject.GetComponent<Animator>().enabled = false;
         agoraUid = GetAgoraUid(id);
         AgoraManager.agoraManager.SetAttenuation(agoraUid, 0.3f);
     }
-
 
     void Update() {
         if (!isMyAvatar)
@@ -122,77 +127,26 @@ public class Avatar : MonoBehaviour
     {
         Debug.Log(id + "가 리액션 :" + reactionId);
 
-        HideAllReactionObj();
-
-        switch (reactionId)
+        // 1. 지금 재생 중인 행동과 똑같은 신호가 오면 무시 (연타 완벽 방어)
+        if (currentReaction == reactionId)
         {
-            case "tambourine":
-                if(tambourine != null) tambourine.SetActive(true);
-                break;
-            case "kick":
-                break;
-            case "drum":
-                if(drumStick != null) drumStick.SetActive(true);
-                break;
-            case "clap":
-                break;
+            counter++;
+            return;
         }
 
-        PlayAnimation(reactionId);
+        if (animator != null && animator.enabled)
+        {
+            // 2. 다른 리액션으로 바뀌는 거라면 이전 오브젝트 싹 다 끄기
+            HideAllReactionObj();
 
-        //리액션에 따른 활성화와 애니매이션 작동 코드
-
-        //(현재 재생중인 것과 다를 경우)
-        //기존 애니메이션 중단
-        //오브젝트 비활성화
-
-        //대상 오브젝트 활성화
-        //애니메이션 n초간 재생
+            // 3. 상태 잠금 및 애니메이터 트리거 발동
+            currentReaction = reactionId;
+            animator.SetTrigger(reactionId);
+        }
     }
-
-    public void PlayAnimation(string reactionId)
-    {
-
-        if(animeRoutine != null)
-        {
-            StopCoroutine(animeRoutine);
-        }
-
-        if(nowAnime != "" && nowAnime != reactionId)
-        {
-            if(animator != null && animator.enabled)
-            {
-                animator.SetBool(reactionId, false);
-            }
-        }
-
-        animeRoutine = StartCoroutine(AnimeTimerRoutine(reactionId));
-    }
-
-    private IEnumerator AnimeTimerRoutine(string reactionId)
-    {
-        nowAnime = reactionId;
-
-        if(animator != null && animator.enabled)
-        {
-            animator.SetBool(reactionId, true);
-        }
-
-        yield return new WaitForSeconds(animeTime);
-
-        if(animator != null && animator.enabled)
-        {
-            animator.SetBool(reactionId, false);
-        }
-
-        HideAllReactionObj();
-        animeRoutine = null;
-        nowAnime = "";
-    }
-
     private void HideAllReactionObj()
     {
-        if(tambourine != null) tambourine.SetActive(false);
-        if(drumStick != null) drumStick.SetActive(false);
+        if (tambourine != null) tambourine.SetActive(false);
+        if (drum != null) drum.SetActive(false);
     }
 }
