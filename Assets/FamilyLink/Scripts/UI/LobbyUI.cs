@@ -10,7 +10,6 @@ using System.Text;
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System;
-using Unity.Tutorials.Core.Editor;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -122,7 +121,7 @@ public class LobbyUI : MonoBehaviour
 
     IEnumerator GetRoomRoutine()
     {
-        yield return new WaitUntil(SessionManager.sessionManager.authToken.IsNotNullOrEmpty);
+        yield return new WaitUntil(() => !string.IsNullOrEmpty(SessionManager.sessionManager.authToken));
         using(UnityWebRequest request = UnityWebRequest.Get(AppConfig.RoomsUrl))
         {
             string token = SessionManager.sessionManager.authToken;

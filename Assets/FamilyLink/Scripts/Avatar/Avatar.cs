@@ -32,6 +32,7 @@ public class Avatar : MonoBehaviour
 
     [Header("Reaction Objects")]
     AudioSource audioSource;
+    public bool isSinging = false;
     public GameObject tambourine;
     public GameObject drum;
 
@@ -67,6 +68,10 @@ public class Avatar : MonoBehaviour
         string networkId = gameObject.GetComponent<AvatarSync>().NetworkId.ToString().Split('.')[0];
         var room = AvatarManager.avatarManager.spawnManager.roomClient.Room;
         audioSource = this.GetComponent<AudioSource>();
+        if(audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         foreach(var entry in room)
         {
@@ -94,8 +99,7 @@ public class Avatar : MonoBehaviour
     void Update() {
         if (!isMyAvatar)
         {
-            // 아래 화살표 누르면 blink 표정 적용
-            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            if (false) {
                 Debug.Log("asdfsafd");
                 var vrm10 = GetComponent<Vrm10Instance>(); // [cite: 99, 113]
                 if (vrm10 != null) {
@@ -130,6 +134,8 @@ public class Avatar : MonoBehaviour
     //웹앱 유저용
     public void PlayReaction(string reactionId)
     {
+        if(isSinging) return;
+
         Debug.Log(id + "가 리액션 :" + reactionId);
 
         // 1. 지금 재생 중인 행동과 똑같은 신호가 오면 무시 (연타 완벽 방어)
@@ -158,6 +164,8 @@ public class Avatar : MonoBehaviour
     //다른 리액션을 하거나 1초가 지나면 비활성화
     public void PlayReactionVr(string reactionId)
     {
+        if(isSinging) return;
+
         if(hideTimer != null)
         {
             StopCoroutine(hideTimer);

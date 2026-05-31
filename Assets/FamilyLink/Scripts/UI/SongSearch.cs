@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Org.BouncyCastle.Bcpg.OpenPgp;
-using Unity.Tutorials.Core.Editor;
 using UnityEngine;
 using UnityEngine.Networking;
 using FamilyLink;
@@ -50,7 +49,7 @@ public class SongSearch : MonoBehaviour
     //검색 버튼 클릭
     public void SearchSong()
     {
-        if (songTitle.IsNullOrEmpty()) return;
+        if (string.IsNullOrEmpty(songTitle)) return;
 
         StartCoroutine(SearchSongRoutine(songTitle));
     }

@@ -148,7 +148,8 @@ public class AgoraManager : MonoBehaviour
 
         rtcEngine.JoinChannel(token, roomID, GetAgoraUid(uid), options);
         Debug.Log($"아고라 연결 성공 - 채널 : {roomID}, 계정 : {GetAgoraUid(uid)}");
-        rtcEngine.MuteLocalAudioStream(uid != SessionManager.sessionManager.currentTurnId);
+        //rtcEngine.MuteLocalAudioStream(uid != SessionManager.sessionManager.currentTurnId);
+        rtcEngine.MuteLocalAudioStream(false);
     }
 
     public void QuitChannel()
@@ -165,8 +166,8 @@ public class AgoraManager : MonoBehaviour
     //아고라 입출력 여부 전환 스위치, 마이크 아님
     public void AgoraTrigger(string id)
     {
-        rtcEngine.MuteLocalAudioStream(uid != id);
-        print("오디오 송신 : " + (uid == id));
+        //rtcEngine.MuteLocalAudioStream(uid != id);
+        //print("오디오 송신 : " + (uid == id));
     }
 
     private void Update()

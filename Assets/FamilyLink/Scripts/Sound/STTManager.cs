@@ -68,9 +68,8 @@ public class STTManager : MonoBehaviour
     private async Task<string> UploadAudioAsync(byte[] audioData)
     {
         WWWForm form = new WWWForm();
-        form.AddBinaryData("file", audioData, "record.wav", "audio/wav");
-
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:5222/api/transcribe", form))
+        form.AddBinaryData("audio", audioData, "record.wav", "audio/wav");
+        using (UnityWebRequest www = UnityWebRequest.Post(AppConfig.STTUrl, form))
         {
             // 필요 시 주석 해제하여 토큰 연동
             // www.SetRequestHeader("Authorization", "Bearer " + SessionManager.sessionManager.authToken);

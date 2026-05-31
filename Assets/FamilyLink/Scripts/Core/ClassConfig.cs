@@ -158,4 +158,11 @@ namespace FamilyLink
         public string status;
         public string text;
     }
+
+    [Serializable]
+    public class _AnnounceData_
+    {
+        public string message;
+        public string audioData;
+    }
 }

@@ -18,6 +18,8 @@ public class STTInputController : MonoBehaviour, IPointerClickHandler
         // 1. 자기 자신에게 붙어있는 InputField 자동 할당
         inputField = GetComponent<TMP_InputField>();
 
+        inputField.onEndEdit.AddListener((_) => { if (VRKeyboardManager.Instance != null) VRKeyboardManager.Instance.CloseKeyboard(); });
+
         // 2. AudioSource 자동 탐색 및 생성
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
@@ -37,6 +39,14 @@ public class STTInputController : MonoBehaviour, IPointerClickHandler
     {
         if (isProcessing) return; 
         await RunSTTFlow();
+    }
+
+    public void OnDeselect(PointerEventData eventData)
+    {
+        if (VRKeyboardManager.Instance != null)
+        {
+            VRKeyboardManager.Instance.CloseKeyboard(); // 키보드 닫기
+        }
     }
 
     private async Task RunSTTFlow()
@@ -75,7 +85,7 @@ public class STTInputController : MonoBehaviour, IPointerClickHandler
         inputField.interactable = true;
         inputField.Select();
         
-        TouchScreenKeyboard.Open(inputField.text);
+        VRKeyboardManager.Instance.OpenKeyboard(inputField);
 
         isProcessing = false;
     }

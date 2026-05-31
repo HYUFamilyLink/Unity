@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FamilyLink;
 using TMPro;
+using Ubiq.Extensions;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,8 +47,23 @@ public class ObjectManager : MonoBehaviour
         skipButton.gameObject.SetActive(isTurn);
         Search.gameObject.SetActive(isTurn);
 
+        foreach (var avatar in AvatarManager.avatarManager.userDict.Values)
+        {
+            if (avatar != null)
+            {
+                avatar.isSinging = false;
+                avatar.GetComponent<Animator>().SetBool("isSinging", false);
+            }
+        }
+
+        if(!AvatarManager.avatarManager.userDict.ContainsKey(uid)) return;
+
         //mic.GetComponent<ObjSync>().SetOwner(isTurn);
         var target = AvatarManager.avatarManager.userDict[uid];
+
+        target.isSinging = true;
+        target.GetComponent<Animator>().SetBool("isSinging", true);
+
         if (isTurn) mic.traceTarget = target.GetComponent<AvatarSync>().xrRight;
         else mic.traceTarget = target.transform.Find("AvatarRoot/Hips/Spine/Chest/Right_Shoulder/Right_UpperArm/Right_ForeArm/RightHand/RightHandIndex1/RightHandIndex2");
     }

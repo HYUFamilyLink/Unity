@@ -12,6 +12,7 @@ public class SocketManager : MonoBehaviour
 
     public Action<NetworkUser> OnUserJoined;
     public Action<string> OnUserLeft;
+    public Action<string, string> OnRoomAnnounce;
 
     //music
     public Action<string> OnTurnChanged; //턴 변경시 트리거되는건 여기에
@@ -111,6 +112,12 @@ public class SocketManager : MonoBehaviour
             //지금은 디버깅을 위해 sessionManager의 StartAt 송신
             OnSyncRequested?.Invoke();
         });
+
+        socket.OnUnityThread("room:announce", (data) =>
+        {
+            var announceData = JsonConvert.DeserializeObject<_AnnounceData_>(data.ToString().Trim('[', ']'));
+            OnRoomAnnounce?.Invoke(announceData.message, announceData.audioData);
+        });
     }
 
     public void LeftEvenet()
@@ -118,6 +125,7 @@ public class SocketManager : MonoBehaviour
         socket.Off("room:user_joined");
         socket.Off("room:user_left");
         socket.Off("room:state");
+        socket.Off("room:announce");
         socket.Off("user:reaction");
         socket.Off("song:receive_sync");
         socket.Off("song:request_sync");
