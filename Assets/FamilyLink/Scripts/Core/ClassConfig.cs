@@ -151,4 +151,11 @@ namespace FamilyLink
         public string emoji; // \ 가 생략된 U000 값 실제 사용시 \를 직접 붙여줘야한다
         public List<AudioClip> sound;
     }
+
+    [Serializable]
+    public class _STTData_
+    {
+        public string status;
+        public string text;
+    }
 }

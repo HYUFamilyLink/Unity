@@ -5,18 +5,18 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Android;
 using FamilyLink;
+using Newtonsoft.Json;
 
 public class STTManager : MonoBehaviour
 {
-    // ★ 프로젝트 규격에 맞춘 싱글톤 선언
     public static STTManager sttManager;
 
     private string micDevice;
     private AudioClip recordingClip;
     private bool isRecording = false;
 
-    private const int MAX_RECORD_TIME = 10; 
-    private const int SAMPLE_RATE = 44100;
+    private const int MAX_RECORD_TIME = 5; 
+    private const int SAMPLE_RATE = 16000;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class STTManager : MonoBehaviour
         if (sttManager == null)
         {
             sttManager = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
         else Destroy(this); 
         
@@ -68,9 +68,9 @@ public class STTManager : MonoBehaviour
     private async Task<string> UploadAudioAsync(byte[] audioData)
     {
         WWWForm form = new WWWForm();
-        form.AddBinaryData("audio", audioData, "record.wav", "audio/wav");
+        form.AddBinaryData("file", audioData, "record.wav", "audio/wav");
 
-        using (UnityWebRequest www = UnityWebRequest.Post(AppConfig.STTUrl, form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:5222/api/transcribe", form))
         {
             // 필요 시 주석 해제하여 토큰 연동
             // www.SetRequestHeader("Authorization", "Bearer " + SessionManager.sessionManager.authToken);
@@ -85,8 +85,9 @@ public class STTManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 string textResult = www.downloadHandler.text;
-                Debug.Log("<color=yellow>[STT 성공]</color> 인식 결과: " + textResult);
-                return textResult; 
+                _STTData_ data = JsonConvert.DeserializeObject<_STTData_>(textResult.ToString().Trim('[', ']'));
+                Debug.Log("<color=yellow>[STT 성공]</color> 인식 결과: " + data.text);
+                return data.text; 
             }
             else
             {
