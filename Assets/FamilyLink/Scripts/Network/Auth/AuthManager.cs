@@ -53,7 +53,7 @@ public class AuthManager : MonoBehaviour
             }
             else
             {
-                //TODO : 로그인 실패 인디케이트
+                Debug.LogError($"[Auth] 요청 실패: {request.result} / {request.error} / {request.downloadHandler.text}");
             }
         }
     }
