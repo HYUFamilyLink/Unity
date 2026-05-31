@@ -12,40 +12,63 @@
 FamilyLink/
 ├── Font/                # 폰트 리소스 (NexonBold, NexonReguler, TTF)
 ├── Graphic/
-│   ├── Avartar/         # 아바타 프리팹 및 에셋
+│   ├── Avartar/         # 아바타 프리팹 및 에셋 (Animation, vrm 포함)
 │   ├── Background/      # 배경 프리팹 및 에셋
 │   ├── Light/           # 광원 효과에 사용되는 에셋
 │   └── Objects/         # 사물 프리팹 및 에셋
-├── Prefab/              # 프리펩
-├── Scenes/              # 메인 씬 (Lobby, KaraokeRoom)
-└── Scripts/
-    ├── Avatar/
-    │   ├── Avatar.cs/
-    │   └── AvatarManager.cs
-    ├── Core/
-    │   ├── AppConfig.cs
-    │   └── ClassConfig.cs
-    ├── Network/
-    │   ├── Agora/
-    │   │   └── AgoraManager.cs
-    │   ├── Auth/
-    │   │   ├── AuthManager.cs
-    │   │   └── SessionManager.cs
-    │   ├── SoketIO/
-    │   │   ├── SoketManager.cs
-    │   │   └── VideoManager.cs
-    │   └── Ubiq/
-    │       ├── AvatarSync.cs
-    │       ├── ObjSync.cs
-    │       └── UbiqP2PManager.cs
-    ├── Room/
-    │   ├── Mic.cs
-    │   ├── ObjectManager.cs
-    │   └── SpawnPointManager.cs
-    └── UI/
-        ├── LobbyUI.cs
-        ├── RoomUIManager.cs
-        └── UIManager.cs
+├── Prefab/              # 프리팹
+│   └── UI/              # UI 관련 프리팹
+├── Scenes/              # 메인 씬 폴더
+│   ├── KaraokeRoom/     # 노래방 씬 관련
+│   └── Lobby/           # 로비 씬 관련
+├── Scripts/
+│   ├── Animation/       # 애니메이션 상태 제어 스크립트
+│   │   ├── EndControl.cs
+│   │   ├── LoopControl.cs
+│   │   └── StartControl.cs
+│   ├── Avatar/          # 아바타 정보 및 생성 관리
+│   │   ├── Avatar.cs
+│   │   └── AvatarManager.cs
+│   ├── Core/            # 공통 설정 및 데이터 모델
+│   │   ├── AppConfig.cs (및 .example)
+│   │   └── ClassConfig.cs
+│   ├── Network/         # 네트워크 및 통신 관련 (소켓, P2P, 음성)
+│   │   ├── Agora/
+│   │   │   └── AgoraManager.cs
+│   │   ├── Auth/
+│   │   │   ├── AuthManager.cs
+│   │   │   └── SessionManager.cs
+│   │   ├── Friend/      # 친구 목록 및 기능
+│   │   │   ├── FriendItemUI.cs
+│   │   │   └── FriendManager.cs
+│   │   ├── SoketIO/
+│   │   │   ├── SoketManager.cs
+│   │   │   └── VideoManager.cs
+│   │   └── Ubiq/        # P2P 동기화
+│   │       ├── AvatarSync.cs
+│   │       ├── ObjSync.cs
+│   │       └── UbiqP2PManager.cs
+│   ├── Room/            # 방 내부 기믹 및 상호작용
+│   │   ├── HandTrigger.cs
+│   │   ├── Mic.cs
+│   │   ├── ObjectManager.cs
+│   │   ├── RoomChange.cs
+│   │   └── SpawnPointManager.cs
+│   ├── Sound/           # 오디오 캡처 및 STT 관련
+│   │   ├── MicInputControler.cs
+│   │   ├── STTInputController.cs
+│   │   ├── STTManager.cs
+│   │   └── WavUtility.cs
+│   └── UI/              # UI 컨트롤러 스크립트
+│       ├── LobbyUI.cs
+│       ├── RoomItemUI.cs
+│       ├── RoomUIManager.cs
+│       ├── SongItemUI.cs
+│       ├── SongSearch.cs
+│       └── UIManager.cs
+└── sounds/              # 효과음 및 오디오 리소스
+    ├── sfx/             # 악기 타격음, 효과음 등
+    └── TTS/             # 안내 음성 파일
 ```
 
 ---
