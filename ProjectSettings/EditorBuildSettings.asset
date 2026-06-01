@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/FamilyLink/Scenes/KaraokeRoom.unity
     guid: 901cb12cc764c96469fdedd1b0013c16
+  - enabled: 1
+    path: Assets/FamilyLink/Scenes/Theme/Theme_Classic.unity
+    guid: 9366aaf02ac02304b9ac4929c4a3a7ea
+  - enabled: 1
+    path: Assets/FamilyLink/Scenes/Theme/Theme_Hanok.unity
+    guid: f77db7be9b64c1c44a9303ac626badab
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2de3d1955eaf0049beb4f0d491bcdff, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

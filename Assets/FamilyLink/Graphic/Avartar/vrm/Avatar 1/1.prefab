@@ -599,6 +599,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1728013695380148634, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5464752662389376283}
+    - targetCorrespondingSourceObject: {fileID: -1728013695380148634, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1709184420679842680}
+    - targetCorrespondingSourceObject: {fileID: -1728013695380148634, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3751437013856968087}
     - targetCorrespondingSourceObject: {fileID: 4088590653200839614, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 368688434433613453}
@@ -652,6 +658,7 @@ MonoBehaviour:
   currentReaction: 
   counter: 0
   objShowTime: 1
+  isSinging: 0
   tambourine: {fileID: 7856048424649894574}
   drum: {fileID: 0}
 --- !u!114 &-8949237357906885142
@@ -788,6 +795,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!168 &-1709184420679842680
+AudioEchoFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623692814103432970}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Delay: 300
+  m_DecayRatio: 0.3
+  m_WetMix: 1
+  m_DryMix: 1
+--- !u!164 &3751437013856968087
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623692814103432970}
+  m_Enabled: 0
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -454
+  m_DecayTime: 0.4
+  m_DecayHFRatio: 0.83
+  m_ReflectionsLevel: -1646
+  m_ReverbLevel: 53
+  m_ReverbDelay: 0.003
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 3
 --- !u!1 &796802911236876669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1464301020480337903, guid: d50add73d663ff2449350e6f643f20ac, type: 3}
