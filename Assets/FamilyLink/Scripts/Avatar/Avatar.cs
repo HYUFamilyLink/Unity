@@ -99,6 +99,7 @@ public class Avatar : MonoBehaviour
     void Update() {
         if (!isMyAvatar)
         {
+            /*
             if (false) {
                 Debug.Log("asdfsafd");
                 var vrm10 = GetComponent<Vrm10Instance>(); // [cite: 99, 113]
@@ -108,6 +109,7 @@ public class Avatar : MonoBehaviour
                     Debug.Log("표정 강제 변경 완료!");
                 }
             }
+            */
             if(AgoraManager.agoraManager != null && agoraUid != 0)
             {
                 AgoraManager.agoraManager.UpdateRemotePosition(

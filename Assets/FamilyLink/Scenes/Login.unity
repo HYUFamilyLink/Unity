@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Interaction Simulator
       objectReference: {fileID: 0}
+    - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -683,6 +687,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1194133627 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8047098132723685741, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
+  m_PrefabInstance: {fileID: 1328766703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1285876398
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,7 +731,7 @@ Transform:
   m_GameObject: {fileID: 1285876398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.33050433, y: 0.24523479, z: -0.14167131}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -737,12 +746,88 @@ MonoBehaviour:
   m_GameObject: {fileID: 1285876398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a4ef5fd27fea0c43bc555c9338421b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e933e81d3c20c74ea6fdc708a67e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spatialKeyboard: {fileID: 7979916830513711522, guid: 4dfac36245beb8e4d884a833a5a0517f, type: 3}
-  distance: 0.6
-  heightOffset: -0.4
+  _monoscopic: 0
+  _sharpenType: 0
+  _disableRecording: 0
+  _enableDynamicResolution: 0
+  minDynamicResolutionScale: 1
+  maxDynamicResolutionScale: 1
+  quest2MinDynamicResolutionScale: 0.7
+  quest2MaxDynamicResolutionScale: 1.3
+  quest3MinDynamicResolutionScale: 0.7
+  quest3MaxDynamicResolutionScale: 1.6
+  minRenderScale: 0.7
+  maxRenderScale: 1
+  _headPoseRelativeOffsetRotation: {x: 0, y: 0, z: 0}
+  _headPoseRelativeOffsetTranslation: {x: 0, y: 0, z: 0}
+  enableCoreMetricsRelease: 0
+  enableCoreMetricsDevelopment: 1
+  coreMetricVisibility:
+    visibleMemoryMetricStats: 0
+    visibleMemoryMetricGraphs: 0
+    visibleRenderMetricStats: 0
+    visibleRenderMetricGraphs: 0
+  enableMixedReality: 0
+  compositionMethod: 0
+  extraHiddenLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  extraVisibleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  dynamicCullingMask: 1
+  externalCompositionBackdropColorRift: {r: 0, g: 1, b: 0, a: 1}
+  externalCompositionBackdropColorQuest: {r: 0, g: 0, b: 0, a: 0}
+  capturingCameraDevice: 0
+  flipCameraFrameHorizontally: 0
+  flipCameraFrameVertically: 0
+  handPoseStateLatency: 0
+  sandwichCompositionRenderLatency: 0
+  sandwichCompositionBufferedFrames: 8
+  chromaKeyColor: {r: 0, g: 1, b: 0, a: 1}
+  chromaKeySimilarity: 0.6
+  chromaKeySmoothRange: 0.03
+  chromaKeySpillRange: 0.06
+  useDynamicLighting: 0
+  depthQuality: 1
+  dynamicLightingSmoothFactor: 8
+  dynamicLightingDepthVariationClampingValue: 0.001
+  virtualGreenScreenType: 0
+  virtualGreenScreenTopY: 10
+  virtualGreenScreenBottomY: -10
+  virtualGreenScreenApplyDepthCulling: 0
+  virtualGreenScreenDepthTolerance: 0.2
+  mrcActivationMode: 0
+  launchSimultaneousHandsControllersOnStartup: 0
+  isInsightPassthroughEnabled: 0
+  shouldBoundaryVisibilityBeSuppressed: 0
+  requestBodyTrackingPermissionOnStartup: 0
+  requestFaceTrackingPermissionOnStartup: 0
+  requestEyeTrackingPermissionOnStartup: 0
+  requestScenePermissionOnStartup: 0
+  requestRecordAudioPermissionOnStartup: 0
+  requestPassthroughCameraAccessPermissionOnStartup: 0
+  _localDimming: 1
+  _trackingOriginType: 1
+  usePositionTracking: 1
+  useRotationTracking: 1
+  useIPDInPositionTracking: 1
+  resetTrackerOnLoad: 0
+  AllowRecenter: 1
+  LateControllerUpdate: 1
+  LateLatching: 0
+  controllerDrivenHandPosesType: 0
+  SimultaneousHandsAndControllersEnabled: 0
+  _readOnlyWideMotionModeHandPosesEnabled: 0
+  wideMotionModeHandPosesEnabled: 0
+  _readOnlyFastMotionModeHandPosesEnabled: 0
+  fastMotionModeHandPosesEnabled: 0
+  _readOnlyWideMotionMode2HandPosesEnabled: 0
+  wideMotionMode2HandPosesEnabled: 0
+  dynamicResolutionVersion: 1
 --- !u!1001 &1328766703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -918,14 +1003,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8047098132723685741, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1328766710}
+    - targetCorrespondingSourceObject: {fileID: 2129521882731330412, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860032214}
   m_SourcePrefab: {fileID: 100100000, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
 --- !u!114 &1328766704 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2453182015541248293, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
   m_PrefabInstance: {fileID: 1328766703}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1860032210}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
@@ -936,7 +1027,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4218623535371951279, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
   m_PrefabInstance: {fileID: 1328766703}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1194133627}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
@@ -947,6 +1038,37 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 6223106407588409140, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
   m_PrefabInstance: {fileID: 1328766703}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1328766710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194133627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576d6282046aea94ba424d4593417222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sttStartClip: {fileID: 0}
+--- !u!1 &1860032210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2129521882731330412, guid: 89fd41a2c9a76bf40a7b842bf363f21f, type: 3}
+  m_PrefabInstance: {fileID: 1328766703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1860032214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860032210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576d6282046aea94ba424d4593417222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sttStartClip: {fileID: 0}
 --- !u!1 &2079941366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,3 +1200,4 @@ SceneRoots:
   - {fileID: 275007865}
   - {fileID: 1144285143}
   - {fileID: 104557078}
+  - {fileID: 1285876400}
