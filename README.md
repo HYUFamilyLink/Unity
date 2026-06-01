@@ -89,6 +89,7 @@ FamilyLink/
 | **Animation rigging** | `com.unity.animation.rigging` | 아바타 리깅 |
 | **NuGet for unity** | `https://github.com/GlitchEnzo/NuGetForUnity/releases` | Nuget |
 | **YoutubeExplode** | `NuGet으로 설치` | 유튜브 재생 |
+| **Meta XR Core SDK** | `unity asset store` | vr 입력 |
 ---
 
 ## 2. 기타 설정 (Settings)

@@ -35,6 +35,7 @@ public class Avatar : MonoBehaviour
     public bool isSinging = false;
     public GameObject tambourine;
     public GameObject drum;
+    public GameObject bell;
 
     public void SetMine()
     {
@@ -91,7 +92,7 @@ public class Avatar : MonoBehaviour
             AvatarManager.avatarManager.SetWebSync(this);
             gameObject.GetComponent<RigBuilder>().enabled = false;
         }
-        //else gameObject.GetComponent<Animator>().enabled = false;
+        else gameObject.GetComponent<Animator>().SetBool("isVR",true);
         agoraUid = GetAgoraUid(id);
         AgoraManager.agoraManager.SetAttenuation(agoraUid, 0.3f);
     }
@@ -99,17 +100,6 @@ public class Avatar : MonoBehaviour
     void Update() {
         if (!isMyAvatar)
         {
-            /*
-            if (false) {
-                Debug.Log("asdfsafd");
-                var vrm10 = GetComponent<Vrm10Instance>(); // [cite: 99, 113]
-                if (vrm10 != null) {
-                    // UI가 없어도 코드로는 강제 실행됩니다
-                    vrm10.Runtime.Expression.SetWeight(ExpressionKey.Blink, 1.0f); // [cite: 111, 128]
-                    Debug.Log("표정 강제 변경 완료!");
-                }
-            }
-            */
             if(AgoraManager.agoraManager != null && agoraUid != 0)
             {
                 AgoraManager.agoraManager.UpdateRemotePosition(
@@ -136,7 +126,11 @@ public class Avatar : MonoBehaviour
     //웹앱 유저용
     public void PlayReaction(string reactionId)
     {
-        if(isSinging) return;
+        if(isSinging)
+        {
+            PlaySound(reactionId);
+            return;
+        }
 
         Debug.Log(id + "가 리액션 :" + reactionId);
 
@@ -159,6 +153,7 @@ public class Avatar : MonoBehaviour
     {
         if (tambourine != null) tambourine.SetActive(false);
         if (drum != null) drum.SetActive(false);
+        if (bell != null) bell.SetActive(false);
     }
 
     //vr 유저용
@@ -166,6 +161,8 @@ public class Avatar : MonoBehaviour
     //다른 리액션을 하거나 1초가 지나면 비활성화
     public void PlayReactionVr(string reactionId)
     {
+        PlaySound(reactionId);
+
         if(isSinging) return;
 
         if(hideTimer != null)
@@ -175,14 +172,13 @@ public class Avatar : MonoBehaviour
 
         if (currentReaction == reactionId)
         {
-            PlaySound(reactionId);
+            
             hideTimer = StartCoroutine(HideObjTimer());
             return;
         }
 
         HideAllReactionObj();
         ReactionObjShow(reactionId);
-        PlaySound(reactionId);
         hideTimer = StartCoroutine(HideObjTimer());
     }
 
@@ -203,6 +199,9 @@ public class Avatar : MonoBehaviour
                 return;
             case "drum":
                 drum.SetActive(true);
+                return;
+            case "bell":
+                bell.SetActive(true);
                 return;
             default:
                 return;
