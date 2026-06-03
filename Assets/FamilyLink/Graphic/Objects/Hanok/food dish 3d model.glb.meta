@@ -2,7 +2,27 @@ fileFormatVersion: 2
 guid: a99a866ac4b366246aecf9d6fe918bca
 ScriptedImporter:
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tripo_material_9ab8ccc7-0726-4c52-8329-c7f8023aaf8e
+    second: {fileID: 2100000, guid: f69a536c83ee65742a147490027e8d79, type: 2}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: food+dish+3d+model_basecolor.jpg
+    second: {fileID: 2800000, guid: 64d72a77ef5b85f43bd8bde320d9ba1b, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: food+dish+3d+model_normal.jpg.normal
+    second: {fileID: 2800000, guid: 8f989c62cdcc77c4990b782cdb66b778, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: food+dish+3d+model_rm.jpg.standard
+    second: {fileID: 2800000, guid: ab5a54b1accc12f4e83a11a9e10ed979, type: 3}
   serializedVersion: 2
   userData: 
   assetBundleName: 

@@ -36,6 +36,8 @@ public class VideoManager : MonoBehaviour
         videoPlayer.playOnAwake = false;
         videoPlayer.prepareCompleted += OnPlayerReady;
 
+        videoPlayer.SetDirectAudioVolume(0, 0.3f);
+
         // SessionManager를 통해 내 ID 가져오기 (초기화 보장)
         if (SessionManager.sessionManager != null && SessionManager.sessionManager.currentUser != null)
         {

@@ -44,8 +44,7 @@ public class ObjectManager : MonoBehaviour
     {
         bool isTurn = currentUser.id == uid;
 
-        skipButton.gameObject.SetActive(isTurn);
-        Search.gameObject.SetActive(isTurn);
+        ObjAcitve(isTurn);
 
         foreach (var avatar in AvatarManager.avatarManager.userDict.Values)
         {
@@ -66,5 +65,11 @@ public class ObjectManager : MonoBehaviour
 
         if (isTurn) mic.traceTarget = target.GetComponent<AvatarSync>().xrRight;
         else mic.traceTarget = target.transform.Find("AvatarRoot/Hips/Spine/Chest/Right_Shoulder/Right_UpperArm/Right_ForeArm/RightHand/RightHandIndex1/RightHandIndex2");
+    }
+
+    void ObjAcitve(bool state)
+    {
+        skipButton.gameObject.SetActive(state);
+        Search.SetActive(state);
     }
 }

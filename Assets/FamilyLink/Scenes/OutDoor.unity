@@ -154,6 +154,7 @@ MonoBehaviour:
   spawnManager: {fileID: 718384039}
   avatarCatalogue: {fileID: 0}
   isMaster: 0
+  reactions: []
 --- !u!4 &92681029
 Transform:
   m_ObjectHideFlags: 0

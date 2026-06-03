@@ -5,6 +5,7 @@ using TMPro;
 using FamilyLink;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 //Login에서 UI 변화를 관장하는 스크립트
 public class UIManager : MonoBehaviour
@@ -55,6 +56,11 @@ public class UIManager : MonoBehaviour
         });
 
         AuthManager.authManager.Login(json);
+    }
+
+    public void PWSelect()
+    {
+        TouchScreenKeyboard.Open(birthInput.text, TouchScreenKeyboardType.Default);
     }
 
     public void ChangeValueName(string value) => _name = value;

@@ -2,7 +2,27 @@ fileFormatVersion: 2
 guid: 94ddddcbdc301f64e8fed7860677ccc2
 ScriptedImporter:
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tripo_material_6e3493a5-34ba-4c37-887b-59ce9452f963
+    second: {fileID: 2100000, guid: 46787a279ca30174ebe1aa81c582ecc4, type: 2}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: stone+bridge+3d+model_basecolor.jpg
+    second: {fileID: 2800000, guid: cd16af335ef0a1c41b6e7ac8d559b15c, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: stone+bridge+3d+model_normal.jpg.normal
+    second: {fileID: 2800000, guid: fd06b854e80285c439a8687113dc8692, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: stone+bridge+3d+model_rm.jpg.standard
+    second: {fileID: 2800000, guid: 7ca05138cc7f1ad499ec08b730be8ee8, type: 3}
   serializedVersion: 2
   userData: 
   assetBundleName: 

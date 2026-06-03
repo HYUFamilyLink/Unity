@@ -194,6 +194,7 @@ public class Avatar : MonoBehaviour
     {
         switch (reactionId)
         {
+            case "kick":
             case "tambourine":
                 tambourine.SetActive(true);
                 return;

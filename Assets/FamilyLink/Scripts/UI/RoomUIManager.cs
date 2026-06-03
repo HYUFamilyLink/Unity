@@ -1,20 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using FamilyLink;
+using UnityEngine.UI;
 
 // KaraokeRoom 씬의 UI를 관리하는 스크립트
-// 디버깅용 UI에 가깝다
 public class RoomUIManager : MonoBehaviour
 {
     public static RoomUIManager roomUIManager;
 
     [Header("UI Elements")]
-    public TextMeshProUGUI currentSingerText; // 현재 노래 부르는 사람 표시
-    public TextMeshProUGUI CurrentSongText;
+    public Image mic;
+    public Image speaker;
 
-    [Header("Data")]
-    private string title;
+    [Header("Icon")]
+    public Sprite micOn;
+    public Sprite micOff;
+    public Sprite speakerOn;
+    public Sprite speakerOff;
+
+    /*
+    [Header("Debug UI Elements")]
+    public TextMeshProUGUI currentSingerText;
+    public TextMeshProUGUI currentSongText;
+    */
 
     private void Awake()
     {
@@ -24,7 +32,7 @@ public class RoomUIManager : MonoBehaviour
 
     private void Start()
     {
-        // 소켓 이벤트 구독
+        /* 소켓 이벤트 구독
         if (SocketManager.socketManager != null)
         {
             SocketManager.socketManager.OnVideoUpdate += UpdateVideo;
@@ -32,18 +40,21 @@ public class RoomUIManager : MonoBehaviour
             UpdateVideo(SessionManager.sessionManager.currentVideo);
             UpdateTurnUI(SessionManager.sessionManager.currentTurnId);
         }
+        */
     }
 
     private void OnDestroy()
     {
+        /*
         if (SocketManager.socketManager != null)
         {
             SocketManager.socketManager.OnVideoUpdate -= UpdateVideo;
             SocketManager.socketManager.OnTurnChanged -= UpdateTurnUI;
         }
+        */
     }
 
-    // --- [소켓 수신 UI 업데이트 로직] ---
+    /* --- [소켓 수신 UI 업데이트 로직] ---
     private void UpdateVideo(PlayingVideoData videoData)
     {
         string text = "";
@@ -64,6 +75,7 @@ public class RoomUIManager : MonoBehaviour
         
         currentSingerText.text = $"현재 턴: {currentTurn.nickname}";
     }
+    */
 
     // --- [사용자 액션 발송 로직] ---
 
@@ -85,5 +97,19 @@ public class RoomUIManager : MonoBehaviour
             session.users?.Count ?? 1
         );
         Debug.Log($"[Room] 친구 초대 전송: {friendId}");
+    }
+
+    public void SetIcon(string name, bool isOn)
+    {
+        if(name == "mic")
+        {
+            if(isOn) mic.sprite = micOn;
+            else mic.sprite = micOff;
+        }
+        else
+        {
+            if(isOn) speaker.sprite = speakerOn;
+            else speaker.sprite = speakerOff;
+        }
     }
 }

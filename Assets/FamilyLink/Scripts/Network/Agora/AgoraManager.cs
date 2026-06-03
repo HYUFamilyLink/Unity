@@ -23,6 +23,7 @@ public class AgoraManager : MonoBehaviour
     private string roomID => SessionManager.sessionManager.roomID;
     private string uid => SessionManager.sessionManager.currentUser.id;
 
+
     private void Awake()
     {
         if(agoraManager == null) agoraManager = this;
@@ -97,7 +98,7 @@ public class AgoraManager : MonoBehaviour
         spatialAudio.Initialize();
 
         spatialAudio.SetAudioRecvRange(50f); // 가청 범위 설정
-        spatialAudio.SetDistanceUnit(1f); // 단위 설정
+        spatialAudio.SetDistanceUnit(50f); // 단위 설정
 
         //rtcEngine.EnableInEarMonitoring(true, (int)EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE);
         //rtcEngine.SetInEarMonitoringVolume(100);
@@ -174,33 +175,24 @@ public class AgoraManager : MonoBehaviour
     {
         if(!isConnected) return;
         rtcEngine.AdjustRecordingSignalVolume(volume);
-        if(isSpeakerOn)rtcEngine.AdjustPlaybackSignalVolume(100);
+        if(isSpeakerOn)rtcEngine.AdjustPlaybackSignalVolume(400);
     }
 
     private bool isMicOn = true;
-    public void SetMute(TextMeshProUGUI text)
+    public void SetMute()
     {
         rtcEngine.MuteLocalAudioStream(isMicOn);
         isMicOn = !isMicOn;
-        if(isMicOn) text.text = "마이크\n켜짐";
-        else text.text = "마이크\n꺼짐";
-        Debug.Log("마이크 상태 변경");
+        RoomUIManager.roomUIManager.SetIcon("mic", isMicOn);
     }
 
     private bool isSpeakerOn = true;
-    public void SetSpeakerOff(TextMeshProUGUI text)
+    public void SetSpeakerOff()
     {
         isSpeakerOn = !isSpeakerOn;
-        if (isSpeakerOn)
-        {
-            text.text = "음성 수신\n켜짐";
-            rtcEngine.AdjustPlaybackSignalVolume(100);  // 스피커 켜기
-        }
-        else
-        {
-            text.text = "음성 수신\n꺼짐";
-            rtcEngine.AdjustPlaybackSignalVolume(0); // 스피커 끄기
-        }
+        if (isSpeakerOn) rtcEngine.AdjustPlaybackSignalVolume(400);  // 스피커 켜기
+        else rtcEngine.AdjustPlaybackSignalVolume(0); // 스피커 끄기
+        RoomUIManager.roomUIManager.SetIcon("speaker", isSpeakerOn);
     }
 
     public void UpdateRemotePosition(uint remoteUid, Vector3 pos, Vector3 forward)

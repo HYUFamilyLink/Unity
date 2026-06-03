@@ -15,7 +15,7 @@ public class STTManager : MonoBehaviour
     private AudioClip recordingClip;
     private bool isRecording = false;
 
-    private const int MAX_RECORD_TIME = 5; 
+    private const int MAX_RECORD_TIME = 10; 
     private const int SAMPLE_RATE = 16000;
 
     private void Awake()
