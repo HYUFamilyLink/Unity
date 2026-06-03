@@ -49,7 +49,6 @@ public class AuthManager : MonoBehaviour
                 SocketManager.socketManager.Connect();
 
                 UIManager.uiManager.UIChange(); // login > lobby
-                if(SessionManager.sessionManager.currentUser.profileimage == 0) LobbyUI.lobbyUI.SetProfileImg();
             }
             else
             {

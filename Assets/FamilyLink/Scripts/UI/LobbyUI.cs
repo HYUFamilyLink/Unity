@@ -10,6 +10,7 @@ using System.Text;
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -42,13 +43,11 @@ public class LobbyUI : MonoBehaviour
         if (SocketManager.socketManager?.socket == null) return;
         if (SessionManager.sessionManager.currentUser != null) profileSelect.sprite = profiles[SessionManager.sessionManager.currentUser.profileimage];
 
+        if(SessionManager.sessionManager.currentUser.profileimage == 0) SetProfileImg();
+
         SocketManager.socketManager.ListenFriendUpdate();
 
-        if (FriendManager.instance != null)
-        {
-            FriendManager.instance.OnFriendDataLoaded += RefreshFriendListUI;
-            FriendManager.instance.LoadAll();
-        }
+        StartCoroutine(InitFriendSystemRoutine());
 
         StartCoroutine(GetRoomRoutine());
 
@@ -117,6 +116,15 @@ public class LobbyUI : MonoBehaviour
         socket.OnUnityThread("error", (data) => {
             Debug.LogError($"<color=red>[Lobby]</color> 접속 에러: {data}");
         });
+    }
+
+    IEnumerator InitFriendSystemRoutine()
+    {
+        yield return new WaitUntil(() => FriendManager.instance != null);
+
+        FriendManager.instance.OnFriendDataLoaded += RefreshFriendListUI;
+        FriendManager.instance.LoadAll();
+        Debug.Log("친구 데이터 로드 완료");
     }
 
     IEnumerator GetRoomRoutine()
