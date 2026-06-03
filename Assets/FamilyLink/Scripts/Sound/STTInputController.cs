@@ -17,6 +17,7 @@ public class STTInputController : MonoBehaviour, IPointerClickHandler
     {
         // 1. 자기 자신에게 붙어있는 InputField 자동 할당
         inputField = GetComponent<TMP_InputField>();
+        inputField.shouldHideMobileInput = true;
 
         // 2. AudioSource 자동 탐색 및 생성
         audioSource = GetComponent<AudioSource>();
