@@ -138,6 +138,14 @@ MonoBehaviour:
   id: 
   agoraUid: 0
   role: phone
+  head: {fileID: 0}
+  currentReaction: 
+  counter: 0
+  objShowTime: 1
+  isSinging: 0
+  tambourine: {fileID: 0}
+  drum: {fileID: 0}
+  bell: {fileID: 0}
 --- !u!1 &5901557632271239615
 GameObject:
   m_ObjectHideFlags: 0
