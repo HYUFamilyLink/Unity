@@ -37,6 +37,7 @@ public class LobbyUI : MonoBehaviour
     [Header("Friends")]
     public Transform friendListContent;
     public GameObject friendItemPrefab;
+    public GameObject friendView;
 
     private void OnEnable()
     {
@@ -268,6 +269,12 @@ public class LobbyUI : MonoBehaviour
         if (status == null)           sm.SendFriendRequest(targetId);
         else if (status == "received") sm.AcceptFriend(targetId);
         else                           sm.RemoveFriend(targetId);
+    }
+
+    public void FriendViewSet()
+    {
+        bool isAcitve = friendView.activeSelf;
+        friendView.SetActive(!isAcitve);
     }
 
     public void RoomUpdate(List<RoomListState> roomList)
