@@ -18,7 +18,7 @@ public class HandTrigger : MonoBehaviour
     public GameObject bell;
 
     [Header("쿨다운")]
-    public float coolDown = 0.2f;
+    public float coolDown = 0.4f;
     public float lastTime;
 
     void Start()
@@ -39,7 +39,7 @@ public class HandTrigger : MonoBehaviour
     void TambourineShake()
     {
         if(isRight || !tambourine.activeSelf) return;
-        if(speed > offset)
+        if(speed > offset * 2)
         {
             if(Time.time >= lastTime + coolDown)
             {
@@ -88,11 +88,12 @@ public class HandTrigger : MonoBehaviour
     public void Objselect(string objTag)
     {
         DeselectAll();
+        Debug.Log(objTag);
         switch (objTag)
         {
             case "Tambourine":
-                if(!isRight) return;
-                otherHand.enabled = false;
+                if(isRight) otherHand.enabled = false;
+                else gameObject.GetComponent<Collider>().enabled = false;
                 tambourine.SetActive(true);
                 break;
             case "Bell":
@@ -112,6 +113,7 @@ public class HandTrigger : MonoBehaviour
         bell.SetActive(false);
         drum.SetActive(false);
         otherHand.enabled = true;
+        gameObject.GetComponent<Collider>().enabled = true;
     }
 }
 /*
