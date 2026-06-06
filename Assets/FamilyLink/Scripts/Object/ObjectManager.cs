@@ -72,4 +72,9 @@ public class ObjectManager : MonoBehaviour
         skipButton.gameObject.SetActive(state);
         Search.SetActive(state);
     }
+
+    private void OnDestroy()
+    {
+        if(SocketManager.socketManager != null) SocketManager.socketManager.OnTurnChanged -= SetTurn;
+    }
 }

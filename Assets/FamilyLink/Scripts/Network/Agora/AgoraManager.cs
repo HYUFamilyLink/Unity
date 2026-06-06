@@ -159,8 +159,6 @@ public class AgoraManager : MonoBehaviour
         if(rtcEngine != null)
         {
             rtcEngine.LeaveChannel();
-            rtcEngine.Dispose();
-            rtcEngine = null;
         }
     }
 
@@ -221,6 +219,15 @@ public class AgoraManager : MonoBehaviour
             // Listener(나)의 위치 정보를 업데이트해야 비로소 거리 계산이 시작됩니다.
             spatialAudio.UpdateSelfPosition(posArr, fwdArr, rgtArr, upArr);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if(SocketManager.socketManager != null) SocketManager.socketManager.OnTurnChanged -= AgoraTrigger;
+        if(rtcEngine == null) return;
+        Debug.Log("아고라 연결해제");
+        rtcEngine.Dispose();
+        rtcEngine = null;
     }
 
     internal class AgoraEventHandler : IRtcEngineEventHandler

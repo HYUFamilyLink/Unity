@@ -11,7 +11,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Hands.Gestures;
 using UnityEngine.Animations;
-//using UnityEditor.Animations;
 using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
 
@@ -192,20 +191,30 @@ public class AvatarManager : MonoBehaviour
         //2. 리스너/액션 구독 및 구독 해제
         SocketManager.socketManager.OnUserJoined -= HandleUserJoin;
         SocketManager.socketManager.OnUserLeft -= HandleUserLeft;
+        SocketManager.socketManager.OnReactionReceived -= HandleReaction;
         spawnManager.OnSpawned.RemoveAllListeners();
         UbiqP2PManager.ubiqManager.ClearListener();
 
-        //3. 이 오브젝트 디스폰
+        //3. 아고라 연결 해제
+        if(AgoraManager.agoraManager != null)
+        {
+            AgoraManager.agoraManager.QuitChannel();
+        }
+
+        //4. 이 오브젝트 디스폰
         if(roomClient.Peers.Count() > 0)
         {
-            yield return new WaitUntil(() => roomClient.Room[ISMASTERIN] == "T");
-            spawnManager.Despawn(gameObject);   
+            float timeOut = Time.time + 2f;
+            yield return new WaitUntil(() => roomClient.Room[ISMASTERIN] == "T" || Time.time > timeOut);
+            spawnManager.Despawn(userDict[currentUser.id].gameObject);
         }
         else
         {
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
             foreach(var user in userDict.Values) spawnManager.Despawn(user.gameObject);
         }
+
+        yield return new WaitForSeconds(0.1f);
 
         //4. 룸클라이언트 파괴(스폰매니저 있는 곳에 다들어있다)
         if(spawnManager != null)

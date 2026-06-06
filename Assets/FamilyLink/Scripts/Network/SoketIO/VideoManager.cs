@@ -5,6 +5,7 @@ using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 using FamilyLink;
 using System.Linq;
+using Org.BouncyCastle.Crypto.Engines;
 
 //Youtube Sync을 전체 구조에 맞게 리팩토링
 public class VideoManager : MonoBehaviour
@@ -106,10 +107,14 @@ public class VideoManager : MonoBehaviour
             return;
         }
 
+        bool isSameVideo = (currentVideoData != null && currentVideoData.videoId == videoData.videoId);
+
         currentVideoData = videoData;
         currentSingerId = (videoData.singerId ?? "").Trim();
         amISingingNow = (currentSingerId == userId.Trim());
         string videoId = videoData.videoId;
+
+        if(isSameVideo) return;
 
         videoPlayer.Stop();
         loadingOverlay.SetActive(true);
