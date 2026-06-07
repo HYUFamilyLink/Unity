@@ -29,7 +29,7 @@ public class VideoManager : MonoBehaviour
     private PlayerState currentState = PlayerState.NONE;
 
     // ✨ React 로직 이식을 위한 변수 추가
-    private double currentOffsetSec = 0.15;  // offsetRef 역할 (기본 150ms)
+    private double currentOffsetSec = 0.05;  // offsetRef 역할 (기본 50ms)
     private bool isOffsetLocked = false;     // offsetLockedRef 역할
     private float lastSeekTime = 0f;         // lastSeekTimeRef 역할
     private const double BUFFER_MS = 0.300;  // 수신자 버퍼 (300ms = 0.3s)
@@ -176,7 +176,7 @@ public class VideoManager : MonoBehaviour
             if (!isOffsetLocked)
             {
                 int delayMs = AgoraManager.agoraManager.GetAudioDelay(currentSingerId);
-                if (delayMs != 150) // 150이 아니라는 건 실제 통계가 확보되었다는 뜻
+                if (delayMs != 50) // 50이 아니라는 건 실제 통계가 확보되었다는 뜻
                 {
                     // 지연 시간(초 단위) + 버퍼 시간
                     currentOffsetSec = (delayMs / 1000.0) + BUFFER_MS;
@@ -199,7 +199,7 @@ public class VideoManager : MonoBehaviour
             {
                 //Debug.Log($"[Sync] 진행 중 보정: {myTime:F2}s → {targetTime:F2}s");
                 //videoPlayer.time = targetTime;
-                
+
                 // ✨ 3. 드리프트 보정 (0.2초 이상 차이 나고, 마지막 보정 후 3초가 지났을 때만)
                 double drift = Math.Abs(myTime - targetTime);
                 float timeSinceLastSeek = Time.time - lastSeekTime;
