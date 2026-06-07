@@ -1,20 +1,26 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 public class ThemeManager : MonoBehaviour
 {
+    public static ThemeManager themeManager;
     public string defaultThemeName = "Theme_Classic";
+    public Action ChangeThemeAcion;
     private string currentTheme = "";
 
     void Start()
     {
+        if(themeManager == null) themeManager = this;
+        else Destroy(this);
         // 시작하자마자 기본 테마 씬을 불러오라고 명령합니다.
         if (!string.IsNullOrEmpty(defaultThemeName))
         {
             ChangeTheme(defaultThemeName);
         }
-    }    public void ChangeTheme(string themeSceneName)
+    }
+    public void ChangeTheme(string themeSceneName)
     {
         StartCoroutine(SwitchThemeRoutine(themeSceneName));
     }
@@ -50,5 +56,6 @@ public class ThemeManager : MonoBehaviour
         currentTheme = themeSceneName;
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(themeSceneName));
         Debug.Log($"[{themeSceneName}] 테마로 변경 완료!");
+        ChangeThemeAcion?.Invoke();
     }
 }

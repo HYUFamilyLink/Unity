@@ -325,6 +325,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aee31a20ab5048f4bb597fda9daf2401, type: 3}
+--- !u!1 &6062451210054585693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: aee31a20ab5048f4bb597fda9daf2401, type: 3}
+  m_PrefabInstance: {fileID: 6405049478645936140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6875298906687707111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aee31a20ab5048f4bb597fda9daf2401, type: 3}
@@ -754,9 +759,9 @@ MonoBehaviour:
   counter: 0
   objShowTime: 1
   isSinging: 0
-  tambourine: {fileID: 0}
-  drum: {fileID: 0}
-  bell: {fileID: 0}
+  tambourine: {fileID: 7515191387429241222}
+  drum: {fileID: 8121688452269961421}
+  bell: {fileID: 6062451210054585693}
 --- !u!114 &-8949237357906885142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,6 +1240,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4467138112451190354, guid: 9afae61e540255349b9bd372c6ce6399, type: 3}
   m_PrefabInstance: {fileID: 7494717463669059497}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7515191387429241222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -9202605092671148497, guid: 9afae61e540255349b9bd372c6ce6399, type: 3}
+  m_PrefabInstance: {fileID: 7494717463669059497}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8968744162010353052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1313,6 +1323,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac484dd5bf1ce44ca70a6541a4299ee, type: 3}
+--- !u!1 &8121688452269961421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ac484dd5bf1ce44ca70a6541a4299ee, type: 3}
+  m_PrefabInstance: {fileID: 8968744162010353052}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8934534942872906359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7ac484dd5bf1ce44ca70a6541a4299ee, type: 3}

@@ -328,7 +328,7 @@ public class AvatarManager : MonoBehaviour
 
     public void SetWebSync(Avatar avatar = null)
     {
-        if(!isMaster) return;
+        //if(!isMaster) return;
         if(avatar != null)
         {
             avatar.GetComponent<AvatarSync>().SetOwner(isMaster);

@@ -2,7 +2,22 @@ fileFormatVersion: 2
 guid: 576b5ab2fba45cd42bad7809c9315de3
 ScriptedImporter:
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_0.001
+    second: {fileID: 2100000, guid: 067217a72bccfc148933b46184b0d4be, type: 2}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: Baked_BaseColor
+    second: {fileID: 2800000, guid: 7bf70a638d7ae5c4c9a86a3de0062ed8, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: Baked_MetallicRoughness.standard
+    second: {fileID: 2800000, guid: d6370a5543d33c647bc95fb04763cc57, type: 3}
   serializedVersion: 2
   userData: 
   assetBundleName: 

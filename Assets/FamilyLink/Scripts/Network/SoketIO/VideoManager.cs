@@ -111,7 +111,7 @@ public class VideoManager : MonoBehaviour
 
         currentVideoData = videoData;
         currentSingerId = (videoData.singerId ?? "").Trim();
-        amISingingNow = (currentSingerId == userId.Trim());
+        amISingingNow = currentSingerId == userId.Trim();
         string videoId = videoData.videoId;
 
         if(isSameVideo) return;

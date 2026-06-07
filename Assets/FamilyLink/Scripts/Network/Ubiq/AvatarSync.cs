@@ -68,7 +68,23 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
     {
         isMyAvatar = true;
     }
-    
+
+    void Start()
+    {
+        ThemeManager.themeManager.ChangeThemeAcion += ChangeTheme;
+    }
+
+    void OnDestroy()
+    {
+        ThemeManager.themeManager.ChangeThemeAcion -= ChangeTheme;
+    }
+
+    void ChangeTheme()
+    {
+        SpawnPointManager.spawnPointManager.SetPoint(pointIdx, this.GetComponent<Avatar>());
+        if(isMyAvatar) SetTransform();
+    }
+
     public void SetTransform()
     {
         Transform[] allChildren = gameObject.GetComponentsInChildren<Transform>(true);
@@ -143,6 +159,8 @@ public class AvatarSync : MonoBehaviour, INetworkSpawnable
             pointIdx = m.pointIdx;
             SpawnPointManager.spawnPointManager.SetPoint(pointIdx, this.GetComponent<Avatar>());
             var avatar = gameObject.GetComponent<Avatar>();
+
+            if(!string.IsNullOrEmpty(avatar.id)) return;
             avatar.SetID(m.id);
             AvatarManager.avatarManager.ReigsterAvatar(m.id, avatar);
         }

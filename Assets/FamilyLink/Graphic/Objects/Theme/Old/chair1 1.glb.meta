@@ -2,7 +2,32 @@ fileFormatVersion: 2
 guid: 8910636c71b94ad41b732b5dfea1b113
 ScriptedImporter:
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_0
+    second: {fileID: 2100000, guid: 68b4654fc62a14c4ebebe87ea5934ee6, type: 2}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: texture_0
+    second: {fileID: 2800000, guid: 280bbe18517270344b9353aa199ac2f4, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: texture_1.standard
+    second: {fileID: 2800000, guid: 5b95674a464a5df48bdedb4389d64554, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: texture_2.normal
+    second: {fileID: 2800000, guid: 1a468dd194c670b44ab7f0877cdebb86, type: 3}
+  - first:
+      type: UnityEngine:Texture
+      assembly: UnityEngine.CoreModule
+      name: texture_3
+    second: {fileID: 2800000, guid: 3422758fa86ea474bbb7cc89374a1d27, type: 3}
   serializedVersion: 2
   userData: 
   assetBundleName: 
