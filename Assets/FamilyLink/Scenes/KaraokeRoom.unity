@@ -659,6 +659,7 @@ GameObject:
   m_Component:
   - component: {fileID: 232694308}
   - component: {fileID: 232694307}
+  - component: {fileID: 232694309}
   m_Layer: 0
   m_Name: ThemeManager
   m_TagString: Untagged
@@ -694,6 +695,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &232694309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232694306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df554d25b6b5cfb478c0fd04f54c2832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &272082152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 28.00001}
+  m_AnchoredPosition: {x: 0, y: 0.000009536743}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1001 &649944569
@@ -2873,9 +2886,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232694307}
-        m_TargetAssemblyTypeName: ThemeManager, Assembly-CSharp
-        m_MethodName: ChangeThemeByIndex
+      - m_Target: {fileID: 232694309}
+        m_TargetAssemblyTypeName: ThemeSyncManager, Assembly-CSharp
+        m_MethodName: BroadcastThemeChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4698,7 +4711,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1479447115}
   m_HandleRect: {fileID: 1479447114}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -22,7 +22,6 @@ public class UbiqP2PManager : MonoBehaviour
         roomID = SessionManager.sessionManager.roomID;
         if (roomClient != null)
         {
-            Debug.Log("ㅁㅇㄴㄻㄴ");
             roomClient.OnRooms.AddListener(HandleRoomsFound);
             roomClient.OnJoinedRoom.AddListener((rooms) => OnJoinAction());
             roomClient.OnPeerRemoved.AddListener((peer) => OnPeerOutAction(peer));
@@ -47,7 +46,6 @@ public class UbiqP2PManager : MonoBehaviour
         roomClient.DiscoverRooms();
 
         yield return new WaitUntil(() => isDiscoverFin);
-        Debug.Log("asdfsda");
         JoinRoom(roomID);
     }
 
