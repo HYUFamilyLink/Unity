@@ -16,6 +16,7 @@ public class AgoraManager : MonoBehaviour
     private ILocalSpatialAudioEngine spatialAudio;
     private bool isConnected = false;
     public int volume;
+    private Dictionary<uint, int> remoteAudioDelays = new Dictionary<uint, int>();
 
     // 현재 마이크 볼륨 레벨을 확인할 수 있는 변수 (0 ~ 255)
     public int currentMicLevel = 0;
@@ -162,6 +163,19 @@ public class AgoraManager : MonoBehaviour
         }
     }
 
+    public int GetAudioDelay(string singerId)
+    {
+        if (string.IsNullOrEmpty(singerId)) return 150; // 기본값
+
+        uint uid = GetAgoraUid(singerId);
+        if (remoteAudioDelays.ContainsKey(uid))
+        {
+            int delay = remoteAudioDelays[uid];
+            if (delay > 0) return Mathf.Clamp(delay, 50, 500); // React와 동일하게 50~500ms 제한
+        }
+        return 150; // 통계가 아직 없으면 기본값 반환
+    }
+
     //아고라 입출력 여부 전환 스위치, 마이크 아님
     public void AgoraTrigger(string id)
     {
@@ -280,6 +294,12 @@ public class AgoraManager : MonoBehaviour
         public override void OnUserInfoUpdated(uint uid, UserInfo info)
         {
             Debug.Log($"[Agora] 유저 정보 갱신 완료! 내부 UID: {uid} -> Socket ID: {info.userAccount}");
+        }
+        public override void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats)
+        {
+            // networkTransportDelay와 jitterBufferDelay의 합이 실제 수신 지연시간과 가장 유사합니다.
+            int totalDelay = stats.networkTransportDelay + stats.jitterBufferDelay;
+            _manager.remoteAudioDelays[stats.uid] = totalDelay;
         }
     }
 }

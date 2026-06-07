@@ -28,6 +28,12 @@ public class VideoManager : MonoBehaviour
     private enum PlayerState { NONE = -1, ENDED = 0, PLAYING = 1, BUFFERING = 3 }
     private PlayerState currentState = PlayerState.NONE;
 
+    // ✨ React 로직 이식을 위한 변수 추가
+    private double currentOffsetSec = 0.15;  // offsetRef 역할 (기본 150ms)
+    private bool isOffsetLocked = false;     // offsetLockedRef 역할
+    private float lastSeekTime = 0f;         // lastSeekTimeRef 역할
+    private const double BUFFER_MS = 0.300;  // 수신자 버퍼 (300ms = 0.3s)
+
     void Start()
     {
         Debug.Log("[VideoManager] Start() - 소켓 분리 리팩토링 버전");
@@ -116,6 +122,10 @@ public class VideoManager : MonoBehaviour
 
         if(isSameVideo) return;
 
+        isOffsetLocked = false;
+        currentOffsetSec = 0.15; 
+        lastSeekTime = 0f;
+
         videoPlayer.Stop();
         loadingOverlay.SetActive(true);
         isWaitingForInitialSync = false;
@@ -161,7 +171,21 @@ public class VideoManager : MonoBehaviour
         if (!amISingingNow && currentVideoData != null)
         {
             double myTime = videoPlayer.time;
-            targetTime = Math.Max(0, targetTime - AppConfig.AgoraOffsetSec);
+
+            // ✨ 1. 아고라 통계가 확보되면 딱 한 번만 갱신하고 잠금 (React의 offsetLockedRef 로직)
+            if (!isOffsetLocked)
+            {
+                int delayMs = AgoraManager.agoraManager.GetAudioDelay(currentSingerId);
+                if (delayMs != 150) // 150이 아니라는 건 실제 통계가 확보되었다는 뜻
+                {
+                    // 지연 시간(초 단위) + 버퍼 시간
+                    currentOffsetSec = (delayMs / 1000.0) + BUFFER_MS;
+                    isOffsetLocked = true; // 갱신 후 잠금!
+                    Debug.Log($"[Sync] 🔒 네트워크 지연 확보 및 잠금: {delayMs}ms (총 오프셋: {currentOffsetSec:F2}s)");
+                }
+            }
+
+            targetTime = Math.Max(0, targetTime - currentOffsetSec);
 
             if (isWaitingForInitialSync)
             {
@@ -169,11 +193,23 @@ public class VideoManager : MonoBehaviour
                 videoPlayer.time = targetTime;
                 videoPlayer.Play();
                 isWaitingForInitialSync = false;
+                lastSeekTime = Time.time; // 초기 동기화 시간 기록
             }
-            else if (Math.Abs(myTime - targetTime) > 0.1)
+            else
             {
-                Debug.Log($"[Sync] 진행 중 보정: {myTime:F2}s → {targetTime:F2}s");
-                videoPlayer.time = targetTime;
+                //Debug.Log($"[Sync] 진행 중 보정: {myTime:F2}s → {targetTime:F2}s");
+                //videoPlayer.time = targetTime;
+                
+                // ✨ 3. 드리프트 보정 (0.2초 이상 차이 나고, 마지막 보정 후 3초가 지났을 때만)
+                double drift = Math.Abs(myTime - targetTime);
+                float timeSinceLastSeek = Time.time - lastSeekTime;
+
+                if (drift > 0.2 && timeSinceLastSeek > 3.0f)
+                {
+                    Debug.Log($"[Sync] 드리프트 보정: {myTime:F2}s → {targetTime:F2}s");
+                    videoPlayer.time = targetTime;
+                    lastSeekTime = Time.time; // 보정 시간 갱신
+                }
             }
         }
     }
