@@ -56,7 +56,7 @@ public class STTInputController : MonoBehaviour, IPointerClickHandler
 
         STTManager.sttManager.StartRecording();
 
-        for (int i = 10; i > 0; i--)
+        for (int i = 0; i > 0; i--)
         {
             inputField.text = $"음성인식 중... ({i})";
             await Task.Delay(1000);
