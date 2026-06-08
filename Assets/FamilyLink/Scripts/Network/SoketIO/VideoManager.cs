@@ -29,7 +29,7 @@ public class VideoManager : MonoBehaviour
     private PlayerState currentState = PlayerState.NONE;
 
     // ✨ React 로직 이식을 위한 변수 추가
-    private double currentOffsetSec = 0.05;  // offsetRef 역할 (기본 50ms)
+    private double currentOffsetSec = 0;  // offsetRef 역할 (기본 50ms)
     private bool isOffsetLocked = false;     // offsetLockedRef 역할
     private float lastSeekTime = 0f;         // lastSeekTimeRef 역할
     private const double BUFFER_MS = 0.300;  // 수신자 버퍼 (300ms = 0.3s)
@@ -176,7 +176,7 @@ public class VideoManager : MonoBehaviour
             if (!isOffsetLocked)
             {
                 int delayMs = AgoraManager.agoraManager.GetAudioDelay(currentSingerId);
-                if (delayMs != 50) // 50이 아니라는 건 실제 통계가 확보되었다는 뜻
+                if (delayMs != 0) // 50이 아니라는 건 실제 통계가 확보되었다는 뜻
                 {
                     // 지연 시간(초 단위) + 버퍼 시간
                     currentOffsetSec = (delayMs / 1000.0) + BUFFER_MS;

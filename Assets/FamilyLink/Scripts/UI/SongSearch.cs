@@ -18,6 +18,7 @@ public class SongSearch : MonoBehaviour
     [Header("필드")]
     public GameObject songItemPrefab;
     public Transform songListContent;
+    public GameObject songView;
 
     void Start()
     {
@@ -80,6 +81,7 @@ public class SongSearch : MonoBehaviour
 
     void ViewSelect()
     {
+        songView.SetActive(true);
         foreach (Transform child in songListContent)
         {
             Destroy(child.gameObject);
@@ -98,6 +100,7 @@ public class SongSearch : MonoBehaviour
 
     public void SelectEnd()
     {
+        songView.SetActive(false);
         gameObject.SetActive(false);
     }
 }
