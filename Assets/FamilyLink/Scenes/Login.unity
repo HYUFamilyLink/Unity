@@ -3483,6 +3483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sttStartClip: {fileID: 0}
+  isName: 1
 --- !u!1001 &1343938255
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ public class STTInputController : MonoBehaviour, IPointerClickHandler
             audioSource.PlayOneShot(sttStartClip);
         }
 
-        STTManager.sttManager.StartRecording();
+        await STTManager.sttManager.StartRecording();
 
         for (int i = 10; i > 0; i--)
         {

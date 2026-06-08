@@ -162,6 +162,21 @@ public class AgoraManager : MonoBehaviour
             rtcEngine.LeaveChannel();
         }
     }
+    
+    public void PauseMicForSTT(bool pause)
+    {
+        if (rtcEngine != null)
+        {
+            if (pause)
+            {
+                rtcEngine.DisableAudio(); // 하드웨어 마이크 제어권 완전 해제
+            }
+            else
+            {
+                rtcEngine.EnableAudio(); // STT 종료 후 오디오 모듈 재가동
+            }
+        }
+    }
 
     public int GetAudioDelay(string singerId)
     {

@@ -94,7 +94,7 @@ public class Avatar : MonoBehaviour
         }
         else gameObject.GetComponent<Animator>().SetBool("isVR",true);
         agoraUid = GetAgoraUid(id);
-        AgoraManager.agoraManager.SetAttenuation(agoraUid, 0.3f);
+        AgoraManager.agoraManager.SetAttenuation(agoraUid, 0f);
     }
 
     void Update() {
